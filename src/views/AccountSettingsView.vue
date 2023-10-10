@@ -69,7 +69,7 @@ async function updateFirebaseProfile() {
                 <input v-model="accountDetail.interest" type="text"
                     class="py-1 rounded-md bg-neutral-700 text-neutral-400 px-2">
                 <label for="bio" class="text-neutral-400">Bio</label>
-                <textarea v-model="accountDetail.bio" maxlength="255" name="bio" id="bio" cols="30" rows="4"
+                <textarea v-model="accountDetail.bio" maxlength="50" name="bio" id="bio" cols="30" rows="4"
                     class="py-1 rounded-md bg-neutral-700 text-neutral-400 px-2"></textarea>
                 <button @click="updateFirebaseProfile()"
                     class="py-1 px-4 bg-neutral-400 hover:bg-neutral-500 rounded-md w-28 font-medium text-neutral-900">Save</button>
