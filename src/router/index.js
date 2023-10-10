@@ -15,11 +15,6 @@ const router = createRouter({
 			component: () => import("../views/AboutView.vue"),
 		},
 		{
-			path: "/profile",
-			name: "profile",
-			component: () => import("../views/ProfileView.vue"),
-		},
-		{
 			path: "/category/:type",
 			name: "category",
 			component: () => import("../views/CategoryView.vue"),
@@ -28,6 +23,18 @@ const router = createRouter({
 			path: "/sign-in",
 			name: "signin",
 			component: () => import("../views/SignInView.vue"),
+		},
+		{
+			path: "/account/edit",
+			name: "account-edit",
+			component: () => import("../views/AccountSettingsView.vue"),
+			requiresAuth: true,
+		},
+		{
+			path: "/users/:uid",
+			name: "users",
+			component: () => import("../views/UserView.vue"),
+			requiresAuth: true,
 		},
 	],
 });

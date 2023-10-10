@@ -27,7 +27,8 @@ async function signOutOfFirebase() {
             <div class="hidden lg:flex gap-x-10 text-neutral-50">
                 <RouterLink to="/" class="text-base font-semibold leading-6">Home</RouterLink>
                 <RouterLink to="/about" class="text-base font-semibold leading-6">About</RouterLink>
-                <RouterLink v-if="user?.email" to="/profile" class="text-base font-semibold leading-6">Profile</RouterLink>
+                <RouterLink v-if="user?.email" :to="{ name: 'users', params: { uid: user.uid } }"
+                    class="text-base font-semibold leading-6">Profile</RouterLink>
             </div>
             <div class="hidden lg:flex gap-x-2">
                 <div v-if="user?.email" class="flex gap-x-2">
