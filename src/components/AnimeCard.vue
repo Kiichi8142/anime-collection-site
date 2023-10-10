@@ -1,14 +1,26 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
 const props = defineProps([
     'imgUrl',
     'title',
-    'titleEnglish'
+    'titleEnglish',
+    'id',
+    'type'
 ])
+
+function gotoDetail() {
+    if (props.type == 'TV') {
+        router.push({ name: 'anime', params: { id: props.id } })
+    }
+}
 
 </script>
 
 <template>
-    <div class="rounded-md text-center">
+    <div @click="gotoDetail()" class="rounded-md text-center">
         <div class="h-64 lg:h-96 mx-auto hover:bg-neutral-800 rounded-md hover:cursor-pointer">
             <img :src="props.imgUrl" class="h-full w-full object-cover rounded-md object-center hover:opacity-80">
         </div>

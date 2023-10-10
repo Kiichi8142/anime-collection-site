@@ -39,14 +39,14 @@ onMounted(() => {
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl">
                 <div v-for="(anime, key) in data.data.slice(0, 4)" v-bind:key="key">
                     <AnimeCard :title="anime.title" :img-url="anime.images.webp.large_image_url"
-                        :title-english="anime.title_english" />
+                        :title-english="anime.title_english" :id="anime.mal_id" :type="anime.type" />
                 </div>
             </div>
             <div v-else
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
                 <div v-for="(chara, key) in data.data.slice(0, 4)" v-bind:key="key">
-                    <AnimeCard :title="chara.name" :img-url="chara.images.webp.image_url"
-                        :title-english="chara.name_kanji" />
+                    <AnimeCard :title="chara.name" :img-url="chara.images.webp.image_url" :title-english="chara.name_kanji"
+                        type="characters" />
                 </div>
             </div>
         </div>

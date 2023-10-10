@@ -65,8 +65,8 @@ function goToCategory(type) {
     <p class="text-neutral-400 text-base font-medium">TV Series</p>
     <div v-if="seasons" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl">
       <div v-for="(anime, key) in seasons.data.slice(0, 4)" :key="key">
-        <AnimeCard :title="anime.title" :img-url="anime.images.webp.large_image_url"
-          :title-english="anime.title_english" />
+        <AnimeCard :title="anime.title" :img-url="anime.images.webp.large_image_url" :title-english="anime.title_english"
+          :id="anime.mal_id" :type="anime.type" />
       </div>
     </div>
   </div>

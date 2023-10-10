@@ -36,6 +36,11 @@ const router = createRouter({
 			component: () => import("../views/UserView.vue"),
 			requiresAuth: true,
 		},
+		{
+			path: "/anime/:id",
+			name: "anime",
+			component: () => import("../views/AnimeView.vue"),
+		},
 	],
 });
 
