@@ -20,11 +20,6 @@ const router = createRouter({
 			component: () => import("../views/CategoryView.vue"),
 		},
 		{
-			path: "/sign-in",
-			name: "signin",
-			component: () => import("../views/SignInView.vue"),
-		},
-		{
 			path: "/account/edit",
 			name: "account-edit",
 			component: () => import("../views/AccountSettingsView.vue"),
