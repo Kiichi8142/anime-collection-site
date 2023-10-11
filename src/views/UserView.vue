@@ -1,15 +1,11 @@
 <script setup>
 import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
-import { doc, getDoc } from 'firebase/firestore'
-import { useFirestore, useCurrentUser, useFirebaseAuth } from 'vuefire'
-import { onAuthStateChanged } from 'firebase/auth'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
+import { useUserStore } from '../stores/userStore';
 
 const route = useRoute()
-const auth = useFirebaseAuth()
-const db = useFirestore()
-const user = useCurrentUser()
+const userStore = useUserStore()
 
 const accountDetail = ref({
     displayName: '',
@@ -17,43 +13,15 @@ const accountDetail = ref({
     bio: ''
 })
 
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        if (uid === route.params.uid) {
-            const userDetail = await getDoc(doc(db, 'users', uid))
-            accountDetail.value = {
-                ...userDetail.data()
-            }
-        } else {
-            const userDetail = await getDoc(doc(db, 'users', route.params.uid))
-            accountDetail.value = {
-                ...userDetail.data()
-            }
-        }
-        console.log(accountDetail.value)
-    } else {
-        // User is signed out
-        accountDetail.value = {
-            displayName: '',
-            interest: '',
-            bio: ''
-        }
-    }
-});
+accountDetail.value = {
+    ...userStore.information
+}
 
 </script>
 
 <template>
     <div class="max-w-7xl mx-auto p-4 lg:p-8">
-        <div v-if="!user">
-            <p class="text-neutral-700 font-medium text-2xl text-center">You're not signed in yet. Please sign-in first so
-                you can view
-                your profile. :3</p>
-        </div>
-        <div v-else>
+        <div>
             <p class="text-neutral-50 font-medium text-4xl text-center md:text-start">Welcome to your profile page!</p>
             <p class="text-neutral-600 font-medium text-base text-center md:text-start">You can edit your profile
                 information or view your
@@ -75,13 +43,11 @@ onAuthStateChanged(auth, async (user) => {
                     <p class="font-base text-base text-neutral-400">{{ accountDetail.bio }}</p>
                 </div>
                 <div>
-                    <div v-if="user.uid === $route.params.uid" class="flex">
-                        <RouterLink to="/account/edit"
-                            class="self-start flex items-center gap-x-1 bg-neutral-700 rounded-md py-2 px-3 text-neutral-100 font-semibold text-base">
-                            <PencilIcon class="h-5 w-5 text-neutral-100" />
-                            Edit
-                        </RouterLink>
-                    </div>
+                    <RouterLink to="/account/edit"
+                        class="self-start flex items-center gap-x-1 bg-neutral-700 rounded-md py-2 px-3 text-neutral-100 font-semibold text-base">
+                        <PencilIcon class="h-5 w-5 text-neutral-100" />
+                        Edit
+                    </RouterLink>
                 </div>
             </div>
         </div>
