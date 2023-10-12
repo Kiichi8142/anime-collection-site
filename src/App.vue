@@ -1,17 +1,11 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import HeaderComponent from './components/HeaderComponent.vue'
-import { useFirebaseAuth } from 'vuefire';
-
-const auth = useFirebaseAuth()
-
-console.log(auth)
-
+import headercomponent from './components/headercomponent.vue';
 </script>
 
 <template>
   <Suspense>
-    <HeaderComponent />
+    <headercomponent />
   </Suspense>
   <Suspense>
     <RouterView />
