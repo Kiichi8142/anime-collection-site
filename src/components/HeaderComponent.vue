@@ -7,7 +7,7 @@ const router = useRouter()
 
 <template>
     <header class="bg-neutral-900">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 border-b border-neutral-800">
             <div class="flex">
                 <img src="@/assets/logo.svg" alt="" class="object-resize h-12">
             </div>

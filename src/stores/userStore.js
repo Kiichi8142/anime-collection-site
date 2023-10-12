@@ -2,16 +2,6 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", () => {
-	const statusList = [
-		"Plan to Watch",
-		"Completed",
-		"Watching",
-		"Dropped",
-		"On Hold",
-		"Pending",
-		"Interested",
-	];
-
 	const information = ref({
 		displayName: "Anonymous",
 		interest: "",
@@ -35,6 +25,17 @@ export const useUserStore = defineStore("user", () => {
 		});
 	}
 
+	function getProgress(id) {
+		return computed(() => {
+			const anime = watchlist.value.find((item) => item.id === id);
+			if (anime) {
+				return anime.status == "Completed" ? anime.episodes : anime.progress;
+			} else {
+				return 0;
+			}
+		});
+	}
+
 	function addWatchList(data) {
 		const isDuplicate = watchlist.value.some((item) => item.id === data.mal_id);
 		console.log(data);
@@ -44,18 +45,10 @@ export const useUserStore = defineStore("user", () => {
 			watchlist.value.push({
 				id: data.mal_id,
 				status: "Interested",
-				episodes: new Array(data.episodes).fill("unfinnished"),
+				progress: 0,
+				episodes: data.episodes,
 				data: data,
 			});
-		}
-	}
-
-	function toggleEpStatus(id, ep) {
-		const anime = watchlist.value.find((item) => item.id === id);
-		console.log(anime);
-		if (anime) {
-			anime.episodes[ep] =
-				anime.episodes[ep] === "finnished" ? "unfinnished" : "finnished";
 		}
 	}
 
@@ -73,9 +66,8 @@ export const useUserStore = defineStore("user", () => {
 		addFav,
 		watchlist,
 		addWatchList,
-		statusList,
 		getStatusCount,
 		deleteWatchList,
-		toggleEpStatus,
+		getProgress,
 	};
 });

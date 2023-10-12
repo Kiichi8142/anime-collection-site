@@ -40,25 +40,25 @@ function goToCategory(type) {
     <p class="font-bold text-3xl">Collections</p>
     <div class="grid md:grid-cols-2 gap-8 mt-4 max-w-7xl">
       <div @click="goToCategory('manga')"
-        class="relative group hover:cursor-pointer h-28 md:h-100 row-span-1 md:row-span-2 transition-all duration-200">
-        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10">Manga</p>
-        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10">View category</p>
+        class="relative group hover:cursor-pointer h-28 md:h-100 row-span-1 md:row-span-2 transition-all duration-200 bg-black rounded-md">
+        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Manga</p>
+        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10 shadow-md">View category</p>
         <img src="@/assets/img/mangaCat.jpg"
-          class="rounded-md object-cover w-full h-full shadow-inner group-hover:opacity-50 transition-all duration-200">
+          class="rounded-md object-cover w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">
       </div>
       <div @click="goToCategory('anime')"
-        class="relative group hover:cursor-pointer h-28 md:h-48 transition-all duration-200">
-        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10">TV Series</p>
-        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10">View category</p>
+        class="relative group hover:cursor-pointer h-28 md:h-48 transition-all duration-200 bg-black rounded-md">
+        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">TV Series</p>
+        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10 shadow-md">View category</p>
         <img src="@/assets/img/animeCat.jpg"
-          class="rounded-md object-cover object-right-top w-full h-full shadow-inner group-hover:opacity-50 transition-all duration-200">
+          class="rounded-md object-cover object-right-top w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">
       </div>
       <div @click="goToCategory('characters')"
-        class="relative group hover:cursor-pointer h-28 md:h-48 transition-all duration-200">
-        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10">Characters</p>
-        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10">View category</p>
+        class="relative group hover:cursor-pointer h-28 md:h-48 transition-all duration-200 bg-black rounded-md">
+        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Characters</p>
+        <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10 shadow-md">View category</p>
         <img src="@/assets/img/charaCat.jpg"
-          class="rounded-md object-cover object-top w-full h-full shadow-inner group-hover:opacity-50 transition-all duration-200">
+          class="rounded-md object-cover object-top w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">
       </div>
     </div>
     <p class="font-bold text-3xl mt-4">Current Season</p>
