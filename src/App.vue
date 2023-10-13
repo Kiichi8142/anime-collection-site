@@ -1,11 +1,11 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import headercomponent from './components/HeaderComponent.vue';
+import Header from './components/Header.vue';
 </script>
 
 <template>
   <Suspense>
-    <headercomponent />
+    <Header />
   </Suspense>
   <Suspense>
     <RouterView />
