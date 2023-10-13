@@ -10,7 +10,7 @@ import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { useUserStore } from '../stores/userStore';
 import { storeToRefs } from 'pinia';
 
-const props = defineProps(['id'])
+const props = defineProps(['id', 'type'])
 const userStore = useUserStore()
 const user = storeToRefs(userStore)
 const anime = user.watchlist.value.find((item) => item.id === props.id);
@@ -37,7 +37,7 @@ const status = [
     <Listbox v-model="anime.status">
         <div class="relative">
             <ListboxButton
-                class="relative cursor-default rounded-md py-2 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                class="relative w-fit cursor-default hover:bg-neutral-700 rounded-md text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                 <div class="flex items-center gap-1">
                     <div class="block rounded-full h-4 w-4" :class="statusClass[status.indexOf(anime.status)]" />
                     <span class="block truncate text-lg">{{ anime.status }}</span>
@@ -48,11 +48,11 @@ const status = [
             <transition leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100"
                 leave-to-class="opacity-0">
                 <ListboxOptions
-                    class="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-neutral-800 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    class="absolute z-10 mt-1 max-h-60 overflow-auto rounded-md bg-neutral-700 py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                     <ListboxOption v-slot="{ active, selected }" v-for="person in status" :key="person" :value="person"
                         as="template">
                         <li :class="[
-                            active ? 'bg-neutral-600 text-green-600' : 'text-neutral-400',
+                            active ? 'bg-neutral-600 text-green-500' : 'text-neutral-400',
                             'relative cursor-default select-none py-2 pl-10 pr-4',
                         ]">
                             <span :class="[

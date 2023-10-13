@@ -1,8 +1,12 @@
 <script setup>
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import UserBookmarkPanel from '../components/UserBookmarkPanel.vue';
-import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
-import { ref } from 'vue'
+import UserRankingPanel from '../components/UserRankingPanel.vue';
+import UserFavoritePanel from '../components/UserFavoritePanel.vue';
+import UserStatsPanel from '../components/UserStatsPanel.vue';
+import StatusListBox from '../components/StatusListBox.vue';
+import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid';
+import { ref } from 'vue';
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore()
@@ -15,6 +19,36 @@ const accountDetail = ref({
 
 accountDetail.value = {
     ...userStore.information
+}
+
+const categories = ref({
+    Bookmark: [],
+    Ranking: [],
+    Favorite: [],
+})
+
+import {
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+} from '@headlessui/vue'
+const selectedAnime = ref(0)
+const isOpen = ref(false)
+
+function openModal(id) {
+    selectedAnime.value = id
+    isOpen.value = true
+}
+
+function modalDeleteAnime(id) {
+    isOpen.value = false
+    console.log("Delete anime")
+    console.log(id)
+    userStore.deleteWatchList(id)
+}
+
+function setIsOpen(value) {
+    isOpen.value = value
 }
 
 </script>
@@ -45,37 +79,63 @@ accountDetail.value = {
                         Edit
                     </RouterLink>
                 </div>
-                <div
-                    class="grid grid-cols-4 gap-x-4 w-full text-neutral-600 font-medium border border-neutral-800 rounded-md p-6 md:p-8">
-                    <p>Favorite</p>
-                    <p class="text-neutral-400">{{ userStore.favCount }}</p>
-                    <p>Interested</p>
-                    <p class="text-neutral-400">{{ userStore.getStatusCount('Interested') }}</p>
-                    <p>Watching</p>
-                    <p class="text-neutral-400">{{ userStore.getStatusCount('Watching') }}</p>
-                    <p>Completed</p>
-                    <p class="text-neutral-400">{{ userStore.getStatusCount('Completed') }}</p>
-                    <p>Dropped</p>
-                    <p class="text-neutral-400">{{ userStore.getStatusCount('Dropped') }}</p>
-                    <p>On Hold</p>
-                    <p class="text-neutral-400">{{ userStore.getStatusCount('On Hold') }}</p>
-                </div>
+                <UserStatsPanel />
             </div>
 
             <TabGroup>
-                <TabList class="mt-8 flex">
-                    <Tab class="p-4 text-neutral-50 border-b border-neutral-900 hover:border-green-500">Bookmark</Tab>
-                    <Tab class="p-4 text-neutral-50 border-b border-neutral-900 hover:border-green-500">Ranking</Tab>
-                    <Tab class="p-4 text-neutral-50 border-b border-neutral-900 hover:border-green-500">Tab 3</Tab>
+                <TabList class="mt-8 flex w-full border-b border-neutral-800">
+                    <Tab v-for="category in  Object.keys(categories) " as="template" :key="category" v-slot="{ selected }">
+                        <button
+                            :class="['px-8 border-b border-neutral-800 py-2.5 text-sm font-medium leading-5 text-neutral-600', selected ? 'border-sky-600 text-sky-600' : 'hover:border-sky-600 hover:text-sky-600']">
+                            {{ category }}
+                        </button>
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        <UserBookmarkPanel />
+                        <UserBookmarkPanel @editbookmark="(n) => openModal(n)" />
                     </TabPanel>
-                    <TabPanel>Content 2</TabPanel>
-                    <TabPanel>Content 3</TabPanel>
+                    <TabPanel>
+                        <UserRankingPanel />
+                    </TabPanel>
+                    <TabPanel>
+                        <UserFavoritePanel />
+                    </TabPanel>
                 </TabPanels>
             </TabGroup>
         </div>
     </div>
+
+    <Dialog :open="isOpen" @close="setIsOpen">
+        <div class="fixed inset-0 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <DialogPanel class="bg-neutral-800 rounded-md text-neutral-100 flex items-start shadow-xl">
+                    <img class="object-fill h-full w-24"
+                        :src="userStore.getAnimeDataNonComputed(selectedAnime).data.images.webp.large_image_url" alt="">
+                    <div class="p-4 flex flex-col items-start">
+                        <DialogTitle class="font-medium text-xl">Edit Bookmark</DialogTitle>
+                        <form action="" class="mt-4 grid grid-cols-2 gap-4">
+                            <label class="font-medium">Status</label>
+                            <StatusListBox :id="selectedAnime" />
+                            <label class="font-medium">Score</label>
+                            <input v-model="userStore.getAnimeDataNonComputed(selectedAnime).score"
+                                class="rounded-md bg-neutral-700 font-medium text-neutral-200 px-2 py-1" type="number"
+                                min="0" max="10">
+                            <label class="font-medium">Episodes</label>
+                            <input v-model="userStore.getAnimeDataNonComputed(selectedAnime).progress"
+                                class="rounded-md bg-neutral-700 font-medium text-neutral-200 px-2 py-1" type="number"
+                                min="0" :max="userStore.getAnimeDataNonComputed(selectedAnime).episodes">
+                        </form>
+                        <div class="flex self-end gap-x-2">
+                            <button
+                                class="py-2 px-4 text-green-600 hover:text-white hover:bg-neutral-700 font-medium rounded-md mt-4"
+                                @click="modalDeleteAnime(selectedAnime)">Delete</button>
+                            <button class="py-2 px-4 bg-green-600 hover:bg-green-700 font-medium rounded-md mt-4"
+                                @click="setIsOpen(false)">Save</button>
+                        </div>
+                    </div>
+                </DialogPanel>
+            </div>
+        </div>
+    </Dialog>
 </template>

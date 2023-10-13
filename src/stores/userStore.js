@@ -36,6 +36,26 @@ export const useUserStore = defineStore("user", () => {
 		});
 	}
 
+	function getAnimeData(id) {
+		return computed(() => {
+			const anime = watchlist.value.find((item) => item.id === id);
+			if (anime) {
+				return anime;
+			} else {
+				return undefined;
+			}
+		});
+	}
+
+	function getAnimeDataNonComputed(id) {
+		const anime = watchlist.value.find((item) => item.id === id);
+		if (anime) {
+			return anime;
+		} else {
+			return undefined;
+		}
+	}
+
 	function addWatchList(data) {
 		const isDuplicate = watchlist.value.some((item) => item.id === data.mal_id);
 		console.log(data);
@@ -45,6 +65,7 @@ export const useUserStore = defineStore("user", () => {
 			watchlist.value.push({
 				id: data.mal_id,
 				status: "Interested",
+				score: 0,
 				progress: 0,
 				episodes: data.episodes,
 				data: data,
@@ -69,5 +90,7 @@ export const useUserStore = defineStore("user", () => {
 		getStatusCount,
 		deleteWatchList,
 		getProgress,
+		getAnimeData,
+		getAnimeDataNonComputed,
 	};
 });
