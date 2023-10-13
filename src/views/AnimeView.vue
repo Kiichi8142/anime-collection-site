@@ -77,7 +77,7 @@ function addToList() {
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="grid grid-cols-1 md:grid-cols-4">
                     <p class="font-medium text-neutral-100 text-base">Title</p>
-                    <div class="md:col-span-3 grid gap-2 text-neutral-400 items-end">
+                    <div class="md:col-span-3 grid gap-2 text-neutral-400 h-fit">
                         <div class="grid grid-cols-2" v-for="(title, index) in detail.titles" :key="index">
                             <p class="">{{ title.type }}</p>
                             <p class="">{{ title.title }}</p>
@@ -120,7 +120,7 @@ function addToList() {
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4">
                     <p class="font-medium text-neutral-100 text-base">Relations</p>
-                    <div class="col-span-3 grid gap-2">
+                    <div class="col-span-3 grid gap-2 h-fit">
                         <div class="text-neutral-400 grid grid-cols-2" v-for="(relate, index) in detail.relations"
                             :key="index">
                             <p>{{ relate.relation }}</p>
