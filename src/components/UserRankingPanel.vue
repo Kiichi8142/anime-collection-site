@@ -1,6 +1,14 @@
 <script setup>
 import { useUserStore } from '../stores/userStore';
+import { computed } from 'vue'
 const userStore = useUserStore()
+const sortedList = computed(() => {
+    const animeCpy = userStore.watchlist
+    if (animeCpy) {
+        animeCpy.sort((a, b) => b.score - a.score);
+    }
+    return animeCpy
+})
 </script>
 
 <template>
@@ -8,7 +16,7 @@ const userStore = useUserStore()
         <p class="font-medium text-2xl">Ranking</p>
         <p class="text-neutral-600 font-medium">This tab ranks your bookmark list by the points you gave.</p>
         <div v-if="userStore.watchlist.length" class="flex flex-col gap-4 mt-2">
-            <div v-for="(item, key) in userStore.watchlist" :key="key"
+            <div v-for="(item, key) in sortedList" :key="key"
                 class="flex items-center p-4 h-auto md:h-20 border border-neutral-700 rounded-md">
                 <img :src="item.data.images.webp.image_url" alt=""
                     class="self-start w-12 md:w-auto md:h-full shrink-0 object-cover">
