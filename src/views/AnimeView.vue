@@ -107,7 +107,7 @@ function addToList() {
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 items-end">
                         <p class="font-medium text-neutral-100 text-base">Rating</p>
-                        <p class=" text-neutral-400">{{ detail.rating }}</p>
+                        <p class="md:col-span-3 text-neutral-400">{{ detail.rating }}</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4">
