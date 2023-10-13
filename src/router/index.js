@@ -20,16 +20,9 @@ const router = createRouter({
 			component: () => import("../views/CategoryView.vue"),
 		},
 		{
-			path: "/account/edit",
-			name: "account-edit",
-			component: () => import("../views/AccountSettingsView.vue"),
-			requiresAuth: true,
-		},
-		{
 			path: "/profile",
 			name: "profile",
 			component: () => import("../views/UserView.vue"),
-			requiresAuth: true,
 		},
 		{
 			path: "/anime/:id",

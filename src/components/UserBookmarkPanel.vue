@@ -17,12 +17,12 @@ const userStore = useUserStore()
                 <div class="grid grid-cols-1 md:grid-cols-4 items-center w-full gap-1 justify-center p-4">
                     <p class="font-medium truncate md:col-span-2">{{ item.data.title }}</p>
                     <StatusListBox :id="item.id" />
-                    <div class="flex gap-x-2 items-center">
-                        <p class="font-semibold text-2xl">{{ userStore.getProgress(item.id) }}</p>
-                        <p class="text-neutral-400 font-medium">episode watched</p>
+                    <div class="flex gap-x-1 md:gap-x-2 items-center">
+                        <p class="font-semibold md:text-2xl">{{ userStore.getProgress(item.id) }}</p>
+                        <p class="text-neutral-400 text-sm md:text-base font-medium">episode watched</p>
                     </div>
                 </div>
-                <button class="group h-full px-4 " @click="$emit('editbookmark', item.id)">
+                <button class="group h-full md:px-4 " @click="$emit('editbookmark', item.id)">
                     <EllipsisVerticalIcon class="h-6 w-6 group-hover:text-green-500" />
                 </button>
             </div>

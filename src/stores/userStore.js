@@ -6,6 +6,7 @@ export const useUserStore = defineStore("user", () => {
 		displayName: "Anonymous",
 		interest: "",
 		bio: "",
+		pronouns: "he/him",
 	});
 	const favList = ref([]);
 	const favCount = computed(() => favList.value.length);
