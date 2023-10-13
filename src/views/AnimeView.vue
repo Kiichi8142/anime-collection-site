@@ -103,7 +103,7 @@ function loadMoreChara() {
                 </div>
             </div>
             <button @click="loadMoreChara" v-if="currentLoadCharaNumber <= sortedCharacters.length"
-                class="px-4 py-2 mt-4 bg-green-600 text-neutral-100 rounded-md w-fit mx-auto font-medium">Show
+                class="px-4 py-2 mt-4 bg-green-600 hover:bg-green-700 text-neutral-100 rounded-md w-fit mx-auto font-medium">Show
                 More</button>
         </div>
     </div>
