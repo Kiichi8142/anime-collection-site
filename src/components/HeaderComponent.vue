@@ -13,7 +13,7 @@ const router = useRouter()
             </div>
             <div class="hidden lg:flex gap-x-10 text-neutral-50">
                 <RouterLink to="/" class="text-base font-semibold leading-6">Home</RouterLink>
-                <RouterLink to="/about" class="text-base font-semibold leading-6">About</RouterLink>
+                <RouterLink to="/search" class="text-base font-semibold leading-6">Search</RouterLink>
                 <RouterLink to="/profile" class="text-base font-semibold leading-6">Profile</RouterLink>
             </div>
             <div class="flex lg:hidden gap-x-10 text-neutral-50">
