@@ -39,9 +39,9 @@ function goToCategory(type) {
   <div class="max-w-7xl mx-auto p-6 lg:p-8 text-neutral-50">
     <p class="font-bold text-3xl">Collections</p>
     <div class="grid md:grid-cols-2 gap-8 mt-4 max-w-7xl">
-      <div @click="goToCategory('manga')"
+      <div @click="router.push({ name: 'seasonal' })"
         class="relative group hover:cursor-pointer h-28 md:h-100 row-span-1 md:row-span-2 transition-all duration-200 bg-black rounded-md">
-        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Manga</p>
+        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Seasonal</p>
         <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10 shadow-md">View category</p>
         <img src="@/assets/img/mangaCat.jpg"
           class="rounded-md object-cover w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">

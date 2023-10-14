@@ -29,6 +29,11 @@ const router = createRouter({
 			name: "anime",
 			component: () => import("../views/AnimeView.vue"),
 		},
+		{
+			path: "/seasonal",
+			name: "seasonal",
+			component: () => import("../views/SeasonalView.vue"),
+		},
 	],
 });
 
