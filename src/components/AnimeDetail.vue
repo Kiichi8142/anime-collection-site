@@ -1,5 +1,7 @@
 <script setup>
+import { ref } from 'vue'
 const props = defineProps(['detail'])
+const relationEntryLimit = ref(2)
 </script>
 
 <template>
@@ -41,24 +43,16 @@ const props = defineProps(['detail'])
                     <p class="font-medium text-neutral-100 text-base">Rating</p>
                     <p class="md:col-span-3 text-neutral-400">{{ props.detail.rating }}</p>
                 </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 items-end">
+                    <p class="font-medium text-neutral-100 text-base">Airing date</p>
+                    <p class="text-neutral-400 md:col-span-3">{{ props.detail.aired.string }}</p>
+                </div>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4">
                 <p class="font-medium text-neutral-100 text-base">Producers</p>
                 <div class="text-neutral-400 items-end">
                     <div v-for="(producer, index) in props.detail.producers" :key="index">
                         <p>{{ producer.name }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4">
-                <p class="font-medium text-neutral-100 text-base">Relations</p>
-                <div class="col-span-3 grid gap-2 h-fit">
-                    <div class="text-neutral-400 grid grid-cols-2" v-for="(relate, index) in props.detail.relations"
-                        :key="index">
-                        <p>{{ relate.relation }}</p>
-                        <div class="">
-                            <p v-for="(entry, index) in relate.entry" :key="index">{{ entry.name }}</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -70,9 +64,21 @@ const props = defineProps(['detail'])
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-4">
-                <p class="font-medium text-neutral-100 text-base">Airing date</p>
-                <p class="text-neutral-400 md:col-span-3">{{ props.detail.aired.string }}</p>
+            <div class="grid grid-cols-1 md:grid-cols-4">
+                <p class="font-medium text-neutral-100 text-base">Relations</p>
+                <div class="col-span-3 grid gap-2 h-fit">
+                    <div class="text-neutral-400 grid grid-cols-2" v-for="(relate, index) in props.detail.relations"
+                        :key="index">
+                        <p>{{ relate.relation }}</p>
+                        <div class="">
+                            <p v-for="(entry, index) in relate.entry.slice(0, relationEntryLimit)" :key="index">{{
+                                entry.name }}
+                            </p>
+                        </div>
+                    </div>
+                    <button v-if="props.detail.relations.length > relationEntryLimit"
+                        @click="() => relationEntryLimit += 40" class="text-green-500">View all</button>
+                </div>
             </div>
         </div>
     </div>
