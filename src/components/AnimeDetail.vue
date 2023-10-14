@@ -70,6 +70,10 @@ const props = defineProps(['detail'])
                     </div>
                 </div>
             </div>
+            <div class="grid grid-cols-2 md:grid-cols-4">
+                <p class="font-medium text-neutral-100 text-base">Airing date</p>
+                <p class="text-neutral-400 md:col-span-3">{{ props.detail.aired.string }}</p>
+            </div>
         </div>
     </div>
 </template>
