@@ -12,11 +12,8 @@ const props = defineProps([
 ])
 
 function gotoDetail() {
-    if (props.type == 'TV') {
-        router.push({ name: 'anime', params: { id: props.id } })
-    }
+    router.push({ name: 'anime', params: { id: props.id } })
 }
-
 </script>
 
 <template>
