@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const props = defineProps(['detail'])
 const relationEntryLimit = ref(2)
+const isEntryOverLimit = computed(() => {
+    return props.detail.relations.some(relation => relation.entry.length > relationEntryLimit.value);
+}) 
 </script>
 
 <template>
@@ -76,8 +79,8 @@ const relationEntryLimit = ref(2)
                             </p>
                         </div>
                     </div>
-                    <button v-if="props.detail.relations.length > relationEntryLimit"
-                        @click="() => relationEntryLimit += 40" class="text-green-500">View all</button>
+                    <button v-if="isEntryOverLimit" @click="() => relationEntryLimit += 40" class="text-green-500">View
+                        all</button>
                 </div>
             </div>
         </div>
