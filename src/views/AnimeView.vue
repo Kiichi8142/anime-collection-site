@@ -15,7 +15,6 @@ const characters = ref()
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value
-    console.log(charactersCpy)
     if (charactersCpy) {
         charactersCpy.sort((a, b) => b.favorites - a.favorites);
     }
@@ -29,7 +28,6 @@ const loadDetail = async () => {
     detail.value = a_response.data.data
     const c_response = await axios.get('anime/' + id + '/characters', { baseURL: baseURL })
     characters.value = c_response.data.data
-    console.log(c_response.data.data)
 }
 
 loadDetail()

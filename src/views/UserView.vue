@@ -6,21 +6,11 @@ import UserFavoritePanel from '../components/UserFavoritePanel.vue';
 import UserStatsPanel from '../components/UserStatsPanel.vue';
 import UserSettingsPanel from '../components/UserSettingsPanel.vue'
 import StatusListBox from '../components/StatusListBox.vue';
-import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid';
+import { HeartIcon } from '@heroicons/vue/20/solid';
 import { ref } from 'vue';
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore()
-
-const accountDetail = ref({
-    displayName: '',
-    interest: '',
-    bio: ''
-})
-
-accountDetail.value = {
-    ...userStore.information
-}
 
 const categories = ref({
     Bookmark: [],
