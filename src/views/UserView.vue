@@ -112,9 +112,11 @@ function setIsOpen(value) {
                                 type="number" min="0" :max="userStore.getAnimeDataNonComputed(selectedAnime).episodes">
                         </div>
                         <div class="flex self-end gap-x-2">
-                            <button class="py-2 px-4 text-green-600 hover:bg-neutral-700 font-medium rounded-md mt-4"
+                            <button
+                                class="py-2 px-4 transition-all text-neutral-400 hover:text-red-500 hover:bg-neutral-700 font-medium rounded-md mt-4"
                                 @click="modalDeleteAnime(selectedAnime)">Remove</button>
-                            <button class="py-2 px-4 bg-green-600 hover:bg-green-800 font-medium rounded-md mt-4"
+                            <button
+                                class="py-2 px-4 transition-all bg-green-600 hover:text-neutral-100 hover:bg-green-700 font-medium rounded-md mt-4"
                                 @click="setIsOpen(false)">Close</button>
                         </div>
                     </div>
