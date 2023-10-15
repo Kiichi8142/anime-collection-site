@@ -3,6 +3,11 @@ import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore()
 
+function deleteData() {
+    userStore.resetUserData()
+    window.location.reload()
+}
+
 </script>
 
 <template>
@@ -28,7 +33,7 @@ const userStore = useUserStore()
             <p class="text-neutral-50 font-medium text-2xl">Data controls</p>
             <div class="grid grid-cols-1 md:grid-cols-2 items-center">
                 <p class="text-neutral-400">User Data</p>
-                <button @click="userStore.resetUserData"
+                <button @click="deleteData"
                     class="bg-red-700 mt-2 w-auto md:mt-0 md:w-fit md:place-self-end hover:bg-red-600 font-medium text-sm py-2 px-4 rounded-md text-neutral-100">Delete</button>
             </div>
         </div>
