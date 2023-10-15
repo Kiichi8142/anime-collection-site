@@ -34,7 +34,8 @@ watch(searchValue, (newValue) => {
 <template>
   <div class="max-w-7xl mx-auto p-4 lg:p-8">
     <h1 class="font-medium text-4xl text-gray-100">Search</h1>
-    <input v-model.lazy="searchValue" class="w-full mt-4 text-gray-100 p-2 bg-neutral-800 rounded-lg" type="text">
+    <input placeholder="Search anime. . ." v-model.lazy="searchValue"
+      class="w-full mt-4 text-gray-100 p-2 bg-neutral-800 rounded-lg placeholder-neutral-600" type="text">
     <div class="grid grid-cols-4 gap-8 mt-8">
       <div v-for="(anime, index) in searchDetails" :key="index">
         <AnimeCard :img-url="anime.images.webp.large_image_url" :title="anime.title" :title-english="anime.title_english"
