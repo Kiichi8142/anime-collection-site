@@ -6,8 +6,8 @@ const userStore = useUserStore()
 <template>
     <div
         class="grid grid-cols-2 md:grid-cols-4 gap-x-4 text-neutral-600 font-medium border border-neutral-800 rounded-md p-6 md:p-8">
-        <p>Favorite</p>
-        <p class="text-neutral-400 text-xl">{{ userStore.favCount }}</p>
+        <p>Episode watched</p>
+        <p class="text-neutral-400 text-xl">{{ userStore.getEpisodeWatched() }}</p>
         <p>Interested</p>
         <p class="text-neutral-400 text-xl">{{ userStore.getStatusCount('Interested') }}</p>
         <p>Watching</p>

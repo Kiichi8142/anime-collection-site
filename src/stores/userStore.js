@@ -26,6 +26,16 @@ export const useUserStore = defineStore("user", () => {
 		});
 	}
 
+	function getEpisodeWatched() {
+		return computed(() => {
+			const episodeSum = watchlist.value.reduce(
+				(acc, item) => item.progress + acc,
+				0
+			);
+			return episodeSum;
+		});
+	}
+
 	function getProgress(id) {
 		return computed(() => {
 			const anime = watchlist.value.find((item) => item.id === id);
@@ -57,12 +67,23 @@ export const useUserStore = defineStore("user", () => {
 		}
 	}
 
+	function isAnimeBookmark(id) {
+		const anime = watchlist.value.find((item) => item.id === parseInt(id));
+		if (anime) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	function addWatchList(data) {
 		const isDuplicate = watchlist.value.some((item) => item.id === data.mal_id);
 		console.log(data);
 		if (isDuplicate) {
-			console.log("Already added");
+			// Delete anime
+			deleteWatchList(data.mal_id);
 		} else {
+			// add to watch list
 			watchlist.value.push({
 				id: data.mal_id,
 				status: "Interested",
@@ -93,5 +114,7 @@ export const useUserStore = defineStore("user", () => {
 		getProgress,
 		getAnimeData,
 		getAnimeDataNonComputed,
+		isAnimeBookmark,
+		getEpisodeWatched,
 	};
 });

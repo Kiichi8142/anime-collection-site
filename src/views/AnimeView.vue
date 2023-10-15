@@ -12,6 +12,8 @@ const route = useRoute()
 const id = route.params.id
 const detail = ref()
 const characters = ref()
+const isBookmark = ref(userStore.isAnimeBookmark(id))
+console.log(isBookmark.value)
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value
@@ -51,16 +53,6 @@ function loadMoreChara() {
             <div class="h-96 w-auto md:w-72 shrink-0">
                 <img class="rounded-lg object-cover h-full w-full shadow-lg" :src="detail.images.webp.large_image_url"
                     alt="">
-                <div class="flex items-center justify-evenly">
-                    <button @click="userStore.addFav(id)" class="group p-2 flex items-center text-neutral-100 rounded-md">
-                        <StarIcon class="h-6 w-6 text-neutral-700" />
-                        <p class="font-medium group-hover:text-green-500">Add to favorite</p>
-                    </button>
-                    <button @click="addToList()" class="group p-2 flex items-center text-neutral-100 rounded-md">
-                        <BookmarkIcon class="h-6 w-6 text-neutral-700" />
-                        <p class="font-medium group-hover:text-green-500">Bookmark</p>
-                    </button>
-                </div>
             </div>
             <div class="flex flex-col mt-8 md:mt-0">
                 <p class="mt-2 text-2xl lg:text-4xl text-neutral-50 font-medium">{{ detail.title_japanese }}</p>
@@ -83,6 +75,13 @@ function loadMoreChara() {
                         <p class="px-4 py-1 font-medium bg-neutral-600 text-neutral-200 rounded-md">{{ theme.name }}</p>
                     </div>
                 </div>
+                <button @click="addToList()" class="group mt-2 flex items-center text-neutral-100 rounded-md">
+                    <BookmarkIcon class="h-6 w-6 transition-all group-active:text-green-400 group-hover:text-green-700"
+                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }" />
+                    <p class="font-medium transition-all group-active:text-green-400 group-hover:text-green-700"
+                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }">Bookmark
+                    </p>
+                </button>
                 <p class="mt-2 text-neutral-400">{{ detail.synopsis }}</p>
                 <p class="text-neutral-600">source myanimelist</p>
             </div>
