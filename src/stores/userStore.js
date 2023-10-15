@@ -1,13 +1,16 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export const useUserStore = defineStore("user", () => {
-	const information = ref({
-		displayName: "Anonymous",
-		interest: "",
-		bio: "",
-		pronouns: "he/him",
-	});
+	const information = ref(
+		useLocalStorage("vueUseUser", {
+			displayName: "Anonymous",
+			interest: "",
+			bio: "",
+			pronouns: "he/him",
+		})
+	);
 	const favList = ref([]);
 	const favCount = computed(() => favList.value.length);
 
@@ -17,7 +20,7 @@ export const useUserStore = defineStore("user", () => {
 		}
 	}
 
-	const watchlist = ref([]);
+	const watchlist = ref(useLocalStorage("vueUseUserWatchlist", []));
 
 	function getStatusCount(statusToCount) {
 		return computed(() => {
@@ -102,6 +105,11 @@ export const useUserStore = defineStore("user", () => {
 		}
 	}
 
+	function resetUserData() {
+		localStorage.removeItem("vueUseUser");
+		localStorage.removeItem("vueUseUserWatchlist");
+	}
+
 	return {
 		favList,
 		favCount,
@@ -116,5 +124,6 @@ export const useUserStore = defineStore("user", () => {
 		getAnimeDataNonComputed,
 		isAnimeBookmark,
 		getEpisodeWatched,
+		resetUserData,
 	};
 });
