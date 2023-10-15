@@ -17,25 +17,28 @@ const data = ref()
 const season = ref()
 const upcoming = ref()
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delayBetweenRequests = 500;
+
 const loadTop = async () => {
+    await delay(delayBetweenRequests);
     const response = await axios.get('top/' + type, { baseURL: baseURL })
     data.value = response.data
     animeStore.top[type] = response.data
-    console.log(data.value)
 }
 
 const loadSeason = async () => {
+    await delay(delayBetweenRequests);
     const response = await axios.get('seasons/now', { baseURL: baseURL })
     season.value = response.data
     animeStore.season.current = response.data
-    console.log(season.value)
 }
 
 const loadUpcoming = async () => {
+    await delay(delayBetweenRequests);
     const response = await axios.get('seasons/upcoming', { baseURL: baseURL })
     upcoming.value = response.data
     animeStore.season.upcoming = response.data
-    console.log(season.value)
 }
 
 onMounted(() => {
@@ -68,7 +71,7 @@ onMounted(() => {
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
                 <div v-for="(chara, key) in data.data.slice(0, 4)" v-bind:key="key">
                     <AnimeCard :title="chara.name" :img-url="chara.images.webp.large_image_url"
-                        :title-english="chara.name_kanji" type="characters" />
+                        :title-english="chara.name_kanji" type="characters" :id="chara.mal_id" />
                 </div>
             </div>
         </div>
@@ -81,7 +84,7 @@ onMounted(() => {
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
                 <div v-for="(chara, key) in season.data.slice(0, 4)" v-bind:key="key">
                     <AnimeCard :title="chara.name" :img-url="chara.images.webp.large_image_url"
-                        :title-english="chara.name_kanji" type="characters" />
+                        :title-english="chara.name_kanji" type="characters" :id="chara.mal_id" />
                 </div>
             </div>
         </div>
@@ -95,7 +98,7 @@ onMounted(() => {
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
                 <div v-for="(chara, key) in upcoming.data.slice(0, 4)" v-bind:key="key">
                     <AnimeCard :title="chara.name" :img-url="chara.images.webp.large_image_url"
-                        :title-english="chara.name_kanji" type="characters" />
+                        :title-english="chara.name_kanji" type="characters" :id="chara.mal_id" />
                 </div>
             </div>
         </div>

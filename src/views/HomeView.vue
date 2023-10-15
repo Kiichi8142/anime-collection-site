@@ -16,7 +16,6 @@ const loadSeasons = async () => {
   const response = await axios.get('seasons/now', { baseURL: baseURL })
   seasons.value = response.data
   animeStore.season.current = seasons.value
-  console.log(seasons.value)
 }
 
 onMounted(() => {
@@ -53,9 +52,9 @@ function goToCategory(type) {
         <img src="@/assets/img/animeCat.jpg"
           class="rounded-md object-cover object-right-top w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">
       </div>
-      <div @click="goToCategory('characters')"
+      <div @click="router.push({ name: 'upcoming' })"
         class="relative group hover:cursor-pointer h-28 md:h-48 transition-all duration-200 bg-black rounded-md">
-        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Characters</p>
+        <p class="absolute text-neutral-100 font-medium bottom-10 right-5 text-xl z-10 shadow-md">Upcoming</p>
         <p class="absolute text-neutral-300 font-medium bottom-5 right-5 text-sm z-10 shadow-md">View category</p>
         <img src="@/assets/img/charaCat.jpg"
           class="rounded-md object-cover object-top w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">

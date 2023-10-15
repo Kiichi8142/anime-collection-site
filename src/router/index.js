@@ -34,6 +34,11 @@ const router = createRouter({
 			name: "seasonal",
 			component: () => import("../views/SeasonalView.vue"),
 		},
+		{
+			path: "/upcoming",
+			name: "upcoming",
+			component: () => import("../views/UpcomingView.vue"),
+		},
 	],
 });
 

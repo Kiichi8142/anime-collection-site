@@ -15,16 +15,11 @@ const baseURL = 'https://api.jikan.moe/v4/'
 const loadDetail = async () => {
   const res = await axios.get('anime', { baseURL: baseURL, params: { q: searchValue.value, sfw: true } })
   searchDetails.value = res.data.data
-  console.log(searchDetails.value)
-  searchDetails.value.forEach(element => {
-    console.log(element.type)
-  });
 }
 
 loadDetail()
 
 watch(searchValue, (newValue) => {
-  console.log(newValue)
   router.push({ query: { q: newValue } })
   loadDetail()
 })
