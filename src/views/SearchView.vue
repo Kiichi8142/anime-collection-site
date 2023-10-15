@@ -42,6 +42,10 @@ watch(searchValue, (newValue) => {
   loadDetail()
 })
 
+watch(selectedPerson, () => {
+  loadDetail()
+})
+
 </script>
 
 <template>
