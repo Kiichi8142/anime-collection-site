@@ -30,7 +30,12 @@ const router = createRouter({
 			component: () => import("../views/AnimeView.vue"),
 		},
 		{
-			path: "/seasonal",
+			path: "/current",
+			name: "current",
+			component: () => import("../views/SeasonalView.vue"),
+		},
+		{
+			path: "/seasonal/:year/:season",
 			name: "seasonal",
 			component: () => import("../views/SeasonalView.vue"),
 		},

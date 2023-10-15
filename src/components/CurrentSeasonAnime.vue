@@ -1,12 +1,11 @@
 <script setup>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios';
 import AnimeCard from './AnimeCard.vue';
-const props = defineProps(['year', 'season'])
+const props = defineProps(['category'])
 
 const baseURL = 'https://api.jikan.moe/v4/'
-const seasonNow = ref(props.season)
 
 const PageData = ref({
     tv: '',
@@ -28,21 +27,21 @@ const categories = ref({
 
 const loadCurrent = async () => {
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-    const delayBetweenRequests = 1000;
+    const delayBetweenRequests = 500;
 
-    const resTV = await axios.get('seasons/' + props.year + '/' + props.season, { baseURL: baseURL, params: { sfw: true, filter: 'tv' } })
+    const resTV = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, filter: 'tv' } })
     PageData.value.tv = resTV.data.pagination
     AnimeList.value.tv = resTV.data.data
 
     await delay(delayBetweenRequests);
 
-    const resMovie = await axios.get('seasons/' + props.year + '/' + props.season, { baseURL: baseURL, params: { sfw: true, filter: 'movie' } })
+    const resMovie = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, filter: 'movie' } })
     PageData.value.movie = resMovie.data.pagination
     AnimeList.value.movie = resMovie.data.data
 
     await delay(delayBetweenRequests);
 
-    const resONA = await axios.get('seasons/' + props.year + '/' + props.season, { baseURL: baseURL, params: { sfw: true, filter: 'ova' } })
+    const resONA = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, filter: 'ona' } })
     PageData.value.ona = resONA.data.pagination
     AnimeList.value.ona = resONA.data.data
 }
@@ -52,7 +51,7 @@ loadCurrent()
 async function loadMore(type) {
     if (PageData.value[type].has_next_page) {
         try {
-            const response = await axios.get('seasons/' + props.year + '/' + props.season, { baseURL: baseURL, params: { sfw: true, type: type, page: PageData.value[type].current_page + 1 } })
+            const response = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, type: type, page: PageData.value[type].current_page + 1 } })
             PageData.value[type] = response.data.pagination
             const newDetails = response.data
             const combine = [...AnimeList.value[type], ...newDetails.data]
@@ -63,19 +62,15 @@ async function loadMore(type) {
     }
 }
 
-watch(props, () => {
-    loadCurrent()
-})
-
 </script>
 
 <template>
     <div class="flex flex-col">
         <TabGroup>
-            <TabList class="flex flex-col md:flex-row border-b border-neutral-800 mt-4">
+            <TabList class="flex flex-col md:flex-row border-b border-neutral-800">
                 <Tab v-for="category in Object.keys(categories)" as="template" :key="category" v-slot="{ selected }">
-                    <button :class="{ 'border-active': selected }"
-                        class="border-b font-medium text-xl hover:text-green-600 border-neutral-800 py-2 px-6">
+                    <button :class="{ 'border-green-600': selected }"
+                        class="border-b font-medium text-xl border-neutral-800 py-2 px-6">
                         {{ category }}
                     </button>
                 </Tab>
@@ -128,9 +123,3 @@ watch(props, () => {
         </TabGroup>
     </div>
 </template>
-
-<style scoped>
-.border-active {
-    @apply border-b border-green-600
-}
-</style>

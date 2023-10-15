@@ -18,30 +18,27 @@ const season = ref()
 const upcoming = ref()
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-const delayBetweenRequests = 500;
+const delayBetweenRequests = 250;
 
 const loadTop = async () => {
-    await delay(delayBetweenRequests);
     const response = await axios.get('top/' + type, { baseURL: baseURL })
     data.value = response.data
     animeStore.top[type] = response.data
 }
 
 const loadSeason = async () => {
-    await delay(delayBetweenRequests);
     const response = await axios.get('seasons/now', { baseURL: baseURL })
     season.value = response.data
     animeStore.season.current = response.data
 }
 
 const loadUpcoming = async () => {
-    await delay(delayBetweenRequests);
     const response = await axios.get('seasons/upcoming', { baseURL: baseURL })
     upcoming.value = response.data
     animeStore.season.upcoming = response.data
 }
 
-onMounted(() => {
+onMounted(async () => {
     if (animeStore.top[type]) {
         data.value = animeStore.top[type]
     } else {
@@ -51,12 +48,14 @@ onMounted(() => {
     if (animeStore.season.current) {
         season.value = animeStore.season.current
     } else {
+        await delay(delayBetweenRequests);
         loadSeason()
     }
 
     if (animeStore.season.upcoming) {
         upcoming.value = animeStore.season.upcoming
     } else {
+        await delay(delayBetweenRequests);
         loadUpcoming()
     }
 })
@@ -78,7 +77,7 @@ onMounted(() => {
         <div v-if="season" class="mt-8">
             <div class="flex items-end justify-between">
                 <h1 class="font-bold text-3xl">Current Season</h1>
-                <button @click="router.push({ name: 'seasonal' })" class="text-neutral-400">View All</button>
+                <button @click="router.push({ name: 'current' })" class="text-neutral-400">View All</button>
             </div>
             <div
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
@@ -92,7 +91,7 @@ onMounted(() => {
         <div v-if="upcoming" class="mt-8">
             <div class="flex items-end justify-between">
                 <h1 class="font-bold text-3xl">Upcoming</h1>
-                <button class="text-neutral-400">View All</button>
+                <button @click="router.push({ name: 'upcoming' })" class="text-neutral-400">View All</button>
             </div>
             <div
                 class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-content-center mt-4 max-w-7xl overflow-x-auto">
