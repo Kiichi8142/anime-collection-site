@@ -31,10 +31,16 @@ function setClose(type) {
                     </svg>
                 </button>
             </div>
-            <div class="hidden lg:flex lg:gap-x-12">
-                <RouterLink to="/" class="text-sm font-semibold leading-6 text-gray-100">Home</RouterLink>
-                <RouterLink to="/search" class="text-sm font-semibold leading-6 text-gray-100">Search</RouterLink>
-                <RouterLink to="/profile" class="text-sm font-semibold leading-6 text-gray-100">Profile</RouterLink>
+            <div class="hidden lg:flex lg:gap-x-4">
+                <RouterLink to="/"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Home
+                </RouterLink>
+                <RouterLink to="/search"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Search
+                </RouterLink>
+                <RouterLink to="/profile"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Profile
+                </RouterLink>
             </div>
         </nav>
         <!-- Mobile menu, show/hide based on menu open state. -->
@@ -42,12 +48,11 @@ function setClose(type) {
             <!-- Background backdrop, show/hide based on slide-over state. -->
             <div class="fixed inset-0 z-10"></div>
             <div
-                class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto bg-neutral-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                class="fixed inset-y-0 right-0 z-20 w-full overflow-y-auto shadow-xl bg-neutral-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                 <div class="flex items-center justify-between">
                     <a href="#" class="-m-1.5 p-1.5">
                         <span class="sr-only">Your Company</span>
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                            alt="">
+                        <img class="h-8 w-auto" src="@/assets/logo.webp" alt="">
                     </a>
                     <button @click="setClose(true)" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-300">
                         <span class="sr-only">Close menu</span>
@@ -60,14 +65,14 @@ function setClose(type) {
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/10">
                         <div class="space-y-2 py-6">
-                            <RouterLink to="/"
-                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-900">
+                            <RouterLink @click="setClose(true)" to="/"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Home</RouterLink>
-                            <RouterLink to="/search"
-                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-900">
+                            <RouterLink @click="setClose(true)" to="/search"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Search</RouterLink>
-                            <RouterLink to="/profile"
-                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-900">
+                            <RouterLink @click="setClose(true)" to="/profile"
+                                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Profile</RouterLink>
                         </div>
                     </div>
