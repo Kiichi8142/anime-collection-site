@@ -12,8 +12,6 @@ const route = useRoute()
 const id = route.params.id
 const detail = ref()
 const characters = ref()
-const isBookmark = ref(userStore.isAnimeBookmark(id))
-console.log(isBookmark.value)
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value

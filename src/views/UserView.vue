@@ -2,7 +2,6 @@
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import UserBookmarkPanel from '../components/UserBookmarkPanel.vue';
 import UserRankingPanel from '../components/UserRankingPanel.vue';
-import UserFavoritePanel from '../components/UserFavoritePanel.vue';
 import UserStatsPanel from '../components/UserStatsPanel.vue';
 import UserSettingsPanel from '../components/UserSettingsPanel.vue'
 import StatusListBox from '../components/StatusListBox.vue';

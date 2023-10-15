@@ -1,7 +1,5 @@
 <script setup>
 import SeasonalAnime from '../components/SeasonalAnime.vue';
-
-import axios from 'axios';
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 

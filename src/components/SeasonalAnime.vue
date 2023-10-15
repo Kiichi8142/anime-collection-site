@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import axios from 'axios';
 import AnimeCard from './AnimeCard.vue';
 const props = defineProps(['category'])
-const currentTab = ref(0)
 
 const baseURL = 'https://api.jikan.moe/v4/'
 
@@ -45,15 +44,11 @@ const loadCurrent = async () => {
     const resONA = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, filter: 'ona' } })
     PageData.value.ona = resONA.data.pagination
     AnimeList.value.ona = resONA.data.data
-
-    console.log(PageData.value)
-    console.log(AnimeList.value)
 }
 
 loadCurrent()
 
 async function loadMore(type) {
-    console.log("load more page", type)
     if (PageData.value[type].has_next_page) {
         try {
             const response = await axios.get('seasons/' + props.category, { baseURL: baseURL, params: { sfw: true, type: type, page: PageData.value[type].current_page + 1 } })

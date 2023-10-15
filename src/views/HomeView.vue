@@ -21,7 +21,6 @@ const loadSeasons = async () => {
 onMounted(() => {
   // load from pinia instead of fetching
   if (animeStore.season.current) {
-    console.log("Load from pinia")
     seasons.value = animeStore.season.current
   } else {
     loadSeasons()
