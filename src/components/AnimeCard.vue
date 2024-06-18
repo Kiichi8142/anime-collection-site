@@ -17,11 +17,13 @@ function gotoDetail() {
 </script>
 
 <template>
-    <div @click="gotoDetail()" class="rounded-md text-center">
-        <div class="h-64 lg:h-96 mx-auto hover:bg-neutral-800 rounded-md hover:cursor-pointer">
-            <img :src="props.imgUrl" class="h-full w-full object-cover rounded-md object-center hover:opacity-80">
+    <div @click="gotoDetail()" class="rounded-md w-72 text-center cursor-pointer">
+        <div class="space-y-1">
+            <img :src="props.imgUrl" class="object-center object-cover h-96 w-72 rounded-md mx-auto">
+            <div class="space-y-0.5">
+                <p class="text-neutral-50 truncate">{{ props.title }}</p>
+                <p class="text-neutral-400 truncate">{{ props.titleEnglish }}</p>
+            </div>
         </div>
-        <p class="truncate font-medium text-neutral-100">{{ props.title }}</p>
-        <p class="truncate text-neutral-400">{{ props.titleEnglish }}</p>
     </div>
 </template>

@@ -3,8 +3,8 @@ import AnimeDetail from '../components/AnimeDetail.vue';
 import { StarIcon, ClockIcon, CalendarIcon, BookmarkIcon } from '@heroicons/vue/20/solid';
 import { useRoute } from 'vue-router'
 import { ref, computed } from 'vue'
-import axios from 'axios';
 import { useUserStore } from '../stores/userStore';
+import { animeFullById, animeCharactersById } from '../api/anime-api';
 
 const userStore = useUserStore()
 
@@ -12,6 +12,11 @@ const route = useRoute()
 const id = route.params.id
 const detail = ref()
 const characters = ref()
+
+const animeFetchResponse = await animeFullById(id)
+detail.value = animeFetchResponse.data.data
+const charactersFetchResponse = await animeCharactersById(id)
+characters.value = charactersFetchResponse.data.data
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value
@@ -21,16 +26,6 @@ const sortedCharacters = computed(() => {
     return charactersCpy
 })
 const currentLoadCharaNumber = ref(12)
-
-const baseURL = 'https://api.jikan.moe/v4/'
-const loadDetail = async () => {
-    const a_response = await axios.get('anime/' + id + '/full', { baseURL: baseURL })
-    detail.value = a_response.data.data
-    const c_response = await axios.get('anime/' + id + '/characters', { baseURL: baseURL })
-    characters.value = c_response.data.data
-}
-
-loadDetail()
 
 function addToList() {
     const data = {
