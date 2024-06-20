@@ -15,9 +15,9 @@ const router = createRouter({
 			component: () => import("../views/SearchView.vue"),
 		},
 		{
-			path: "/category/:type",
+			path: "/category/anime",
 			name: "category",
-			component: () => import("../views/CategoryView.vue"),
+			component: () => import("../views/CategoryAnimeView.vue"),
 		},
 		{
 			path: "/profile",

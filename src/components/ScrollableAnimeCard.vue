@@ -1,19 +1,21 @@
 <script setup>
 import { ref } from 'vue';
 import AnimeCard from '../components/AnimeCard.vue';
+import { useElementSize } from "@vueuse/core"
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid';
 
 const props = defineProps(['data'])
 
 const scrollable = ref(null)
+const { width } = useElementSize(scrollable)
 
 const GoLeft = () => {
-    scrollable.value.scrollBy({ left: -1000, behavior: "smooth" })
+    scrollable.value.scrollBy({ left: -width.value, behavior: "smooth" })
 };
 
 const GoRight = () => {
-    scrollable.value.scrollBy({ left: 1000, behavior: "smooth" });
+    scrollable.value.scrollBy({ left: width.value, behavior: "smooth" });
 };
 </script>
 

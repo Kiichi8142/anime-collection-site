@@ -69,11 +69,14 @@ function loadMoreChara() {
                     </div>
                 </div>
                 <button @click="addToList()" class="group mt-2 flex items-center text-neutral-100 rounded-md">
-                    <BookmarkIcon class="h-6 w-6 transition-all group-active:text-green-400 group-hover:text-green-700"
-                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }" />
-                    <p class="font-medium transition-all group-active:text-green-400 group-hover:text-green-700"
-                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }">Bookmark
-                    </p>
+                    <div
+                        class="py-1 group px-3 hover:bg-green-600 bg-neutral-600 transition-all duration-300 ease-in-out rounded-md">
+                        <div class="flex space-x-1">
+                            <BookmarkIcon class="size-6 group:hover:text-neutral-600" />
+                            <p v-if="userStore.isAnimeBookmark(id)">Remove from bookmark</p>
+                            <p v-else>Add to bookmark</p>
+                        </div>
+                    </div>
                 </button>
                 <p class="mt-2 text-neutral-400">{{ detail.synopsis }}</p>
                 <p class="text-neutral-600">source myanimelist</p>

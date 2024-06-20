@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { seasonNow, seasonUpcoming, topAnime } from "../api/anime-api";
+import { seasonNow, seasonUpcoming, topAnime, animeRecentRecommendation } from "../api/anime-api";
 
 export const useAnimeStore = defineStore("anime", () => {
 	const season = ref({
@@ -14,6 +14,16 @@ export const useAnimeStore = defineStore("anime", () => {
 		manga: "",
 	});
 
+	const recommendations = ref({
+		anime: "",
+		manga: "",
+	})
+
+	const fetchRecommendation = async () => {
+		const animeRecommendResponse = await animeRecentRecommendation();
+		recommendations.value.anime = animeRecommendResponse.data.data
+	}
+
 	const fetchSeason = async () => {
 		const seasonNowResponse = await seasonNow();
 		season.value.current = seasonNowResponse.data.data
@@ -26,5 +36,23 @@ export const useAnimeStore = defineStore("anime", () => {
 		top.value.anime = topAnimeRes.data.data
 	}
 
-	return { season, top, fetchSeason, fetchTop };
+	const getSeasonIndex = (month) => {
+		return Math.floor((month + 1) % 12 / 3)
+	}
+
+	const getCurrentSeason = () => {
+		const seasons = ['winter', 'spring', 'summer', 'fall'];
+		const currentMonth = new Date().getMonth();
+		return seasons[getSeasonIndex(currentMonth)];
+	}
+
+	return { 
+		season, 
+		top, 
+		fetchSeason, 
+		fetchTop,
+		fetchRecommendation,
+		getCurrentSeason, 
+		recommendations
+	};
 });
