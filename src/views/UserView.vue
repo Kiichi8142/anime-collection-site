@@ -45,33 +45,17 @@ function setIsOpen(value) {
 
 <template>
     <div class="max-w-7xl mx-auto p-4 lg:p-8">
-        <h2 class="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">Your profile.</h2>
-        <p class="text-lg leading-8 text-neutral-400">Update or view Statistics here.</p>
-        <div class="flex flex-col md:flex-row gap-6 p-2 md:p-4">
-            <div class="flex gap-x-4">
-                <img class="w-24 md:w-32 rounded-full object-contain" src="@/assets/img/placeholder_avatar.png" alt="">
-                <div class="flex flex-col justify-start mt-4">
-                    <p class="font-medium text-xl md:text-2xl text-neutral-50">{{ userStore.information.displayName }}
-                    </p>
-                    <div v-if="userStore.information.pronouns" class="flex">
-                        <p class="text-neutral-700 font-medium ml-1">{{ userStore.information.pronouns }}</p>
-                    </div>
-                    <div v-if="userStore.information.interest" class="flex items-center">
-                        <HeartIcon class="h-5 w-5 text-neutral-700" />
-                        <p class="text-neutral-700 font-medium ml-1">{{ userStore.information.interest }}</p>
-                    </div>
-                </div>
-            </div>
-            <div v-if="userStore.information.bio" class="flex flex-col mt-0 md:mt-4 rounded-md px-2 py-1">
-                <p class="text-neutral-700">bio</p>
-                <p class="text-neutral-600 font-medium">{{ userStore.information.bio }}</p>
+        <div class="flex space-x-4">
+            <img class="w-24 rounded-full object-contain" src="@/assets/img/placeholder_avatar.png" alt="">
+            <div class="flex flex-col justify-center">
+                <h2 class="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
+                    {{ userStore.information.displayName }}</h2>
+                <p class="text-lg leading-8 text-neutral-400">Update or view Statistics here.</p>
             </div>
         </div>
 
-        <UserStatsPanel class="mt-4" />
-
         <TabGroup>
-            <TabList class="mt-8 flex flex-col md:flex-row w-full border-b border-neutral-800">
+            <TabList class="flex flex-col md:flex-row w-full border-b border-neutral-800">
                 <Tab v-for="category in Object.keys(categories) " as="template" :key="category" v-slot="{ selected }">
                     <button
                         :class="['px-8 border-b border-neutral-800 py-2.5 text-sm font-medium leading-5 text-neutral-600', selected ? 'border-sky-600 text-sky-600' : 'hover:border-sky-600 hover:text-sky-600']">
@@ -91,6 +75,8 @@ function setIsOpen(value) {
                 </TabPanel>
             </TabPanels>
         </TabGroup>
+
+        <UserStatsPanel class="mt-4" />
     </div>
 
     <Dialog :open="isOpen" @close="setIsOpen">
