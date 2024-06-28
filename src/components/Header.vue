@@ -14,11 +14,22 @@ function setClose(type) {
 <template>
     <header class="bg-neutral-900">
         <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div class="flex lg:flex-1">
+            <div class="flex lg:flex-1 space-x-4">
                 <a href="#" class="-m-1.5 p-1.5">
-                    <span class="sr-only">Your Company</span>
+                    <span class="sr-only">AAC</span>
                     <img class="h-8 w-auto" src="@/assets/logo.webp" alt="">
                 </a>
+                <RouterLink to="/"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Home
+                </RouterLink>
+                <RouterLink :to="{ name: 'search' }"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                    Search
+                </RouterLink>
+                <RouterLink :to="{ name: 'seasonal', params: {} }"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                    Seasonal
+                </RouterLink>
             </div>
             <div class="flex lg:hidden">
                 <button @click="setClose(false)" type="button"
@@ -32,14 +43,9 @@ function setClose(type) {
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-4">
-                <RouterLink to="/"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Home
-                </RouterLink>
-                <RouterLink to="/search"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Search
-                </RouterLink>
-                <RouterLink to="/profile"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Profile
+                <RouterLink :to="{ name: 'profile' }"
+                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                    Profile
                 </RouterLink>
             </div>
         </nav>
