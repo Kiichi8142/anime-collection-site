@@ -29,9 +29,9 @@ const fetchSeason = async (page) => {
 }
 
 onMounted(async () => {
+    router.replace({ name: 'seasonal', params: { year: seasonal.value.year, season: seasonal.value.season }, query: route.query })
     await fetchSeasonList()
     await fetchSeason(route.query?.page || 1)
-    router.replace({ name: 'seasonal', params: { year: seasonal.value.year, season: seasonal.value.season }, query: route.query })
 })
 
 watchEffect(async () => {
