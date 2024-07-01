@@ -15,9 +15,9 @@ const router = createRouter({
 			component: () => import("../views/SearchView.vue"),
 		},
 		{
-			path: "/category/:type",
+			path: "/category/anime",
 			name: "category",
-			component: () => import("../views/CategoryView.vue"),
+			component: () => import("../views/CategoryAnimeView.vue"),
 		},
 		{
 			path: "/profile",
@@ -35,7 +35,7 @@ const router = createRouter({
 			component: () => import("../views/SeasonalView.vue"),
 		},
 		{
-			path: "/seasonal/:year/:season",
+			path: "/seasonal/:year?/:season?",
 			name: "seasonal",
 			component: () => import("../views/SeasonalView.vue"),
 		},

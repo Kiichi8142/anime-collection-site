@@ -3,8 +3,8 @@ import AnimeDetail from '../components/AnimeDetail.vue';
 import { StarIcon, ClockIcon, CalendarIcon, BookmarkIcon } from '@heroicons/vue/20/solid';
 import { useRoute } from 'vue-router'
 import { ref, computed } from 'vue'
-import axios from 'axios';
 import { useUserStore } from '../stores/userStore';
+import { animeFullById, animeCharactersById } from '../api/anime-api';
 
 const userStore = useUserStore()
 
@@ -12,6 +12,11 @@ const route = useRoute()
 const id = route.params.id
 const detail = ref()
 const characters = ref()
+
+const animeFetchResponse = await animeFullById(id)
+detail.value = animeFetchResponse.data.data
+const charactersFetchResponse = await animeCharactersById(id)
+characters.value = charactersFetchResponse.data.data
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value
@@ -21,16 +26,6 @@ const sortedCharacters = computed(() => {
     return charactersCpy
 })
 const currentLoadCharaNumber = ref(12)
-
-const baseURL = 'https://api.jikan.moe/v4/'
-const loadDetail = async () => {
-    const a_response = await axios.get('anime/' + id + '/full', { baseURL: baseURL })
-    detail.value = a_response.data.data
-    const c_response = await axios.get('anime/' + id + '/characters', { baseURL: baseURL })
-    characters.value = c_response.data.data
-}
-
-loadDetail()
 
 function addToList() {
     const data = {
@@ -74,11 +69,14 @@ function loadMoreChara() {
                     </div>
                 </div>
                 <button @click="addToList()" class="group mt-2 flex items-center text-neutral-100 rounded-md">
-                    <BookmarkIcon class="h-6 w-6 transition-all group-active:text-green-400 group-hover:text-green-700"
-                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }" />
-                    <p class="font-medium transition-all group-active:text-green-400 group-hover:text-green-700"
-                        :class="{ 'text-green-500': userStore.isAnimeBookmark(id) }">Bookmark
-                    </p>
+                    <div
+                        class="py-1 group px-3 hover:bg-green-600 bg-neutral-600 transition-all duration-300 ease-in-out rounded-md">
+                        <div class="flex space-x-1">
+                            <BookmarkIcon class="size-6 group:hover:text-neutral-600" />
+                            <p v-if="userStore.isAnimeBookmark(id)">Remove from bookmark</p>
+                            <p v-else>Add to bookmark</p>
+                        </div>
+                    </div>
                 </button>
                 <p class="mt-2 text-neutral-400">{{ detail.synopsis }}</p>
                 <p class="text-neutral-600">source myanimelist</p>
