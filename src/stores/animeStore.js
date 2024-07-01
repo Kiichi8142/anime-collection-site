@@ -8,7 +8,7 @@ export const useAnimeStore = defineStore("anime", () => {
 		upcoming: "",
 	});
 
-	const seasonList = ref()
+	const seasonList = ref([])
 
 	const top = ref({
 		anime: "",
@@ -54,7 +54,8 @@ export const useAnimeStore = defineStore("anime", () => {
 	}
 
 	return { 
-		season, 
+		season,
+		seasonList,
 		top, 
 		fetchSeason, 
 		fetchTop,
