@@ -14,6 +14,6 @@ export const animeCharactersById = (id) => api.get(`/anime/${id}/characters`)
 
 export const topAnime = () => api.get('/top/anime')
 
-export const animeSearch = (searchString, type) => api.get('/anime', { params: { q: searchString, sfw: true, type: type } })
+export const animeSearch = (searchString, type, page) => api.get('/anime', { params: { q: searchString, sfw: true, type: type, page: page } })
 
 export const animeRecentRecommendation = () => api.get('/recommendations/anime')

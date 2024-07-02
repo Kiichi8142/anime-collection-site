@@ -24,7 +24,7 @@ const prevPage = () => {
 </script>
 
 <template>
-    <div class="flex space-x-8 mx-auto justify-center py-4">
+    <div class="flex space-x-8 mx-auto justify-center py-4 text-neutral-50">
         <button v-on:click="prevPage" :disabled="!hasPrevPage">Prev</button>
         <p>{{ currentPage }} / {{ totalPage }}</p>
         <button v-on:click="nextPage" :disabled="!hasNextPage">Next</button>
