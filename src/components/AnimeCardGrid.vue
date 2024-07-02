@@ -1,9 +1,13 @@
 <script setup>
-import { computed } from 'vue';
-import AnimeCard from './AnimeCard.vue';
+import { computed, defineAsyncComponent } from 'vue';
 import PaginationControl from './PaginationControl.vue';
 import { RouterLink, useRoute } from 'vue-router';
 
+const AnimeCard = defineAsyncComponent(
+    () => import('./AnimeCard.vue')
+)
+
+const emit = defineEmits(['nextPage', 'prevPage'])
 const props = defineProps(['animeData', 'pageData'])
 const route = useRoute()
 
@@ -23,7 +27,8 @@ const outOfPage = computed(() => props.pageData.current_page > props.pageData.la
             </div>
             <div v-else>
                 <PaginationControl :total-page="pageData.last_visible_page" :has-next-page="pageData.has_next_page"
-                    :current-page="pageData.current_page" />
+                    :current-page="pageData.current_page" @next-page="$emit('nextPage')"
+                    @prev-page="$emit('prevPage')" />
                 <section>
                     <div
                         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 justify-items-center">
@@ -33,7 +38,8 @@ const outOfPage = computed(() => props.pageData.current_page > props.pageData.la
                     </div>
                 </section>
                 <PaginationControl :total-page="pageData.last_visible_page" :has-next-page="pageData.has_next_page"
-                    :current-page="pageData.current_page" />
+                    :current-page="pageData.current_page" @next-page="$emit('nextPage')"
+                    @prev-page="$emit('prevPage')" />
             </div>
         </div>
     </div>

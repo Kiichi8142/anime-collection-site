@@ -1,28 +1,26 @@
 <script setup>
 import { computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
 
-const router = useRouter()
-const route = useRoute()
 const props = defineProps({
     'totalPage': Number,
     'hasNextPage': Boolean,
     'currentPage': Number
 })
+const emit = defineEmits(['nextPage', 'prevPage'])
+
 const hasPrevPage = computed(() => props.currentPage > 1)
 
 const nextPage = () => {
     if (props.hasNextPage) {
-        router.push({ query: { ...route.query, page: props.currentPage + 1 } })
+        emit('nextPage')
     }
 }
 
 const prevPage = () => {
     if (hasPrevPage) {
-        router.push({ query: { ...route.query, page: props.currentPage - 1 } })
+        emit('prevPage')
     }
 }
-
 </script>
 
 <template>
