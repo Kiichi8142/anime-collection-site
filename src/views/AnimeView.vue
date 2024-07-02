@@ -2,7 +2,7 @@
 import AnimeDetail from '../components/AnimeDetail.vue';
 import { StarIcon, ClockIcon, CalendarIcon, BookmarkIcon } from '@heroicons/vue/20/solid';
 import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import { animeFullById, animeCharactersById } from '../api/anime-api';
 
@@ -13,10 +13,16 @@ const id = route.params.id
 const detail = ref()
 const characters = ref()
 
-const animeFetchResponse = await animeFullById(id)
-detail.value = animeFetchResponse.data.data
-const charactersFetchResponse = await animeCharactersById(id)
-characters.value = charactersFetchResponse.data.data
+const fetchAnimeDetail = async () => {
+    const animeFetchResponse = await animeFullById(id)
+    detail.value = animeFetchResponse.data.data
+    const charactersFetchResponse = await animeCharactersById(id)
+    characters.value = charactersFetchResponse.data.data
+}
+
+onMounted(() => {
+    fetchAnimeDetail()
+})
 
 const sortedCharacters = computed(() => {
     const charactersCpy = characters.value
