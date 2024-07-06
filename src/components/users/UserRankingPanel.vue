@@ -1,9 +1,9 @@
 <script setup>
-import { useUserStore } from '../stores/userStore';
 import { computed } from 'vue'
-const userStore = useUserStore()
+const props = defineProps(['userStore'])
+const hasItems = computed(() => props?.userStore?.watchlist.length || 0)
 const sortedList = computed(() => {
-    const animeCpy = userStore.watchlist
+    const animeCpy = props?.userStore.watchlist
     if (animeCpy) {
         animeCpy.sort((a, b) => b.score - a.score);
     }
@@ -12,9 +12,8 @@ const sortedList = computed(() => {
 </script>
 
 <template>
-    <div class="text-neutral-50 rounded-md p-4 md:p-6">
-        <p class="font-medium text-2xl">Ranking</p>
-        <div v-if="userStore.watchlist.length" class="flex flex-col gap-4 mt-2">
+    <div class="text-neutral-50 rounded-md">
+        <div v-if="hasItems" class="flex flex-col gap-4 mt-2">
             <div v-for="(item, key) in sortedList" :key="key"
                 class="flex items-center p-4 h-auto md:h-20 border border-neutral-700 rounded-md">
                 <img :src="item.data.images.webp.image_url" alt=""

@@ -1,24 +1,23 @@
 <script setup>
-import { useUserStore } from '../stores/userStore';
-import StatusListBox from '../components/StatusListBox.vue'
-import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
-const userStore = useUserStore()
+import { EllipsisVerticalIcon } from '@heroicons/vue/24/solid';
+import { computed } from 'vue';
+const props = defineProps(['userStore'])
+
+const hasItems = computed(() => props?.userStore?.watchlist.length || 0)
 </script>
 
 <template>
-    <div class="text-neutral-50 rounded-md p-4 md:p-6">
-        <p class="font-medium text-2xl">Bookmark List</p>
-        <div v-if="userStore.watchlist.length" class="flex flex-col gap-4 mt-2">
+    <div class="text-neutral-50 rounded-md">
+        <div v-if="hasItems" class="flex flex-col gap-4 mt-2">
             <div v-for="(item, key) in userStore.watchlist" :key="key"
                 class="flex items-center p-4 h-auto md:h-20 border border-neutral-700 rounded-md">
                 <img :src="item.data.images.webp.image_url" alt=""
                     class="self-start w-24 md:w-auto md:h-full shrink-0 object-cover">
                 <div class="grid grid-cols-1 md:grid-cols-4 items-center w-full gap-1 justify-center p-4">
                     <p class="font-medium truncate md:col-span-2">{{ item.data.title }}</p>
-                    <StatusListBox :id="item.id" />
                     <div class="flex gap-x-1 md:gap-x-2 items-center">
                         <p class="font-semibold md:text-2xl">{{ userStore.getProgress(item.id) }}</p>
-                        <p class="text-neutral-400 text-sm md:text-base font-medium">episode watched</p>
+                        <p class="text-neutral-400 text-sm md:text-base font-medium">Episode watched</p>
                     </div>
                 </div>
                 <button class="group h-full md:px-4 " @click="$emit('editbookmark', item.id)">

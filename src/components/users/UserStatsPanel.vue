@@ -1,4 +1,7 @@
 <script setup>
+
+const props = defineProps(['userStats'])
+
 import { useUserStore } from '../stores/userStore';
 const userStore = useUserStore()
 </script>

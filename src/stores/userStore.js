@@ -1,43 +1,22 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import { useLocalStorage } from "@vueuse/core";
+import { useStorage } from "@vueuse/core";
 
 export const useUserStore = defineStore("user", () => {
-	const information = ref(
-		useLocalStorage("vueUseUser", {
+	const userInfo = ref(
+		useStorage("vueUseUser", {
 			displayName: "Anonymous",
 			interest: "",
 			bio: "",
 			pronouns: "he/him",
 		})
 	);
-	const favList = ref([]);
-	const favCount = computed(() => favList.value.length);
 
-	function addFav(id) {
-		if (!favList.value.includes(id)) {
-			favList.value.push(id);
-		}
-	}
+	const watchlist = ref(useStorage("vueUseUserWatchlist", []));
 
-	const watchlist = ref(useLocalStorage("vueUseUserWatchlist", []));
+	const getStatusCount = (status) => computed(() => watchlist.value.filter(wl => wl.status === status).length)
 
-	function getStatusCount(statusToCount) {
-		return computed(() => {
-			return watchlist.value.filter((item) => item.status === statusToCount)
-				.length;
-		});
-	}
-
-	function getEpisodeWatched() {
-		return computed(() => {
-			const episodeSum = watchlist.value.reduce(
-				(acc, item) => item.progress + acc,
-				0
-			);
-			return episodeSum;
-		});
-	}
+	const getEpisodeWatched = () => computed(() => watchlist.value.reduce((acc, wl) => wl.progress + acc, 0))
 
 	function getProgress(id) {
 		return computed(() => {
@@ -111,10 +90,7 @@ export const useUserStore = defineStore("user", () => {
 	}
 
 	return {
-		favList,
-		favCount,
-		information,
-		addFav,
+		userInfo,
 		watchlist,
 		addWatchList,
 		getStatusCount,
