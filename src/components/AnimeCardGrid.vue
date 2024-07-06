@@ -22,7 +22,8 @@ const outOfPage = computed(() => props.pageData.current_page > props.pageData.la
                 <p class="text-2xl text-neutral-200">404 Page not found</p>
                 <RouterLink
                     class="text-xl text-neutral-50 bg-green-600 px-2 py-1 rounded-md hover:opacity-80 transition-all"
-                    :to="{ name: 'seasonal', params: route.params, query: { page: 1 } }">Go back ?
+                    :to="{ name: route.name, params: route.params, query: { ...route.query, page: 1 } }">Go back to
+                    first page.
                 </RouterLink>
             </div>
             <div v-else>
