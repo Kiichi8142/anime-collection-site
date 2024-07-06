@@ -1,11 +1,14 @@
 <script setup>
-import { defineAsyncComponent, ref, watchEffect } from 'vue'
+import { defineAsyncComponent, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { animeSearch } from '../api/anime-api';
 
 const AnimeGridCard = defineAsyncComponent(
   () => import('../components/AnimeCardGrid.vue')
 );
+
+const route = useRoute()
+const router = useRouter()
 
 const types = [
   { text: 'TV', value: 'tv' },
@@ -29,43 +32,52 @@ const ratings = [
 
 const selectedRating = ref(ratings[0].value)
 
-const route = useRoute()
-const router = useRouter()
-
-const searchValue = ref(route.query.q)
+const searchQuery = ref(route.query.query)
 const searchDetails = ref()
 const pagesData = ref([])
 
 const nextPage = async () => {
   if (pagesData.value.has_next_page) {
-    await fetchSearch(pagesData.value.current_page + 1)
+    router.push({ path: '/search', query: { ...route.query, 'page': pagesData.value.current_page + 1 } })
   }
 }
 
 const prevPage = async () => {
   if (pagesData) {
-    await fetchSearch(pagesData.value.current_page - 1)
+    router.push({ path: '/search', query: { ...route.query, 'page': pagesData.value.current_page - 1 } })
   }
 }
 
-const fetchSearch = async (page) => {
-  const searchResponse = await animeSearch(searchValue.value, selectedType.value, page, selectedRating.value)
+const fetchSearch = async (q, page) => {
+  const searchResponse = await animeSearch(q, selectedType.value, route.query?.page || 1, selectedRating.value)
   searchDetails.value = searchResponse.data.data
   pagesData.value = searchResponse.data.pagination
 }
 
-watchEffect(async () => {
-  await fetchSearch(route.query?.page || 1);
-  router.push({ query: { q: searchValue.value, type: selectedType.value, page: pagesData.value?.current_page, rating: selectedRating.value } })
+onMounted(async () => {
+  selectedRating.value = route.query?.rating || ratings[0].value
+  selectedType.value = route.query?.type || types[0].value
+  await fetchSearch(route.query.query)
 })
 
+watch(selectedRating, () => {
+  router.push({ path: '/search', query: { ...route.query, 'rating': selectedRating.value } })
+})
+
+watch(selectedType, () => {
+  router.push({ path: '/search', query: { ...route.query, 'type': selectedType.value } })
+})
+
+watchEffect(async () => {
+  router.push({ path: '/search', query: { ...route.query, 'query': searchQuery.value } })
+})
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto p-4 lg:p-8">
     <div class="flex flex-col space-y-2">
       <h1 class="font-medium text-4xl text-gray-100">Search</h1>
-      <input placeholder="Type in keywords..." v-model.lazy="searchValue"
+      <input placeholder="Type in keywords..." v-model.lazy="searchQuery"
         class="w-full mt-4 text-gray-100 p-2 bg-neutral-800 rounded-lg placeholder-neutral-600" type="text">
       <div class="flex space-x-2">
         <div class="space-x-1">
