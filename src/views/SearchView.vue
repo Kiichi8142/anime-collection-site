@@ -2,13 +2,18 @@
 import { defineAsyncComponent, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { animeSearch } from '../api/anime-api';
+import LoadingDot from '../components/LoadingDot.vue';
 
 const AnimeGridCard = defineAsyncComponent(
   () => import('../components/AnimeCardGrid.vue')
 );
 
-const route = useRoute()
-const router = useRouter()
+const PaginationControl = defineAsyncComponent(
+  () => import('../components/PaginationControl.vue')
+);
+
+const route = useRoute();
+const router = useRouter();
 
 const types = [
   { text: 'TV', value: 'tv' },
@@ -35,6 +40,8 @@ const selectedRating = ref(ratings[0].value)
 const searchQuery = ref(route.query.query)
 const searchDetails = ref()
 const pagesData = ref([])
+const isLoading = ref(true)
+const error = ref(null)
 
 const nextPage = async () => {
   if (pagesData.value.has_next_page) {
@@ -49,9 +56,19 @@ const prevPage = async () => {
 }
 
 const fetchSearch = async (q, page) => {
-  const searchResponse = await animeSearch(q, selectedType.value, route.query?.page || 1, selectedRating.value)
-  searchDetails.value = searchResponse.data.data
-  pagesData.value = searchResponse.data.pagination
+  isLoading.value = true
+  error.value = null
+
+  try {
+    const searchResponse = await animeSearch(q, selectedType.value, route.query?.page || 1, selectedRating.value)
+    searchDetails.value = searchResponse.data.data
+    pagesData.value = searchResponse.data.pagination
+  } catch (err) {
+    console.log("Error fetching search result:", err)
+    error.value = err
+  } finally {
+    isLoading.value = false
+  }
 }
 
 onMounted(async () => {
@@ -100,8 +117,28 @@ watchEffect(async () => {
         </div>
       </div>
     </div>
-    <div v-if="pagesData && searchDetails">
-      <AnimeGridCard :anime-data="searchDetails" :page-data="pagesData" @next-page="nextPage" @prev-page="prevPage" />
-    </div>
+    <transition mode="out-in">
+      <LoadingDot v-if="isLoading" />
+      <div v-else>
+        <PaginationControl :total-page="pagesData.last_visible_page" :has-next-page="pagesData.has_next_page"
+          :current-page="pagesData.current_page" @next-page="nextPage" @prev-page="prevPage" />
+        <AnimeGridCard :anime-data="searchDetails" :page-data="pagesData" />
+        <PaginationControl :total-page="pagesData.last_visible_page" :has-next-page="pagesData.has_next_page"
+          :current-page="pagesData.current_page" @next-page="nextPage" @prev-page="prevPage" />
+      </div>
+    </transition>
   </div>
 </template>
+
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  @apply transition-all ease-in-out duration-100
+}
+
+.v-enter-from,
+.v-leave-to {
+  @apply opacity-0
+}
+</style>
