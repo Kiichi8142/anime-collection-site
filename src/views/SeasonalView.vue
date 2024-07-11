@@ -13,6 +13,10 @@ const PaginationControl = defineAsyncComponent(
     () => import('../components/PaginationControl.vue')
 );
 
+const LoadingDot = defineAsyncComponent(
+    () => import('../components/LoadingDot.vue')
+)
+
 const router = useRouter();
 const route = useRoute();
 const animeStore = useAnimeStore();
@@ -77,7 +81,7 @@ watch(selectedSeason, () => {
 
 <template>
     <div class="max-w-7xl mx-auto text-neutral-50 p-6 lg:p-8">
-        <Transition>
+        <Transition mode="out-in">
             <div v-if="!isLoading">
                 <div class="space-y-4">
                     <div class="space-y-0.5">
@@ -112,6 +116,9 @@ watch(selectedSeason, () => {
                     </div>
                 </div>
             </div>
+            <div v-else>
+                <LoadingDot></LoadingDot>
+            </div>
         </Transition>
     </div>
 </template>
@@ -120,7 +127,7 @@ watch(selectedSeason, () => {
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
-    @apply transition-all ease-in-out duration-100
+    @apply transition-all ease-in-out duration-300
 }
 
 .v-enter-from,

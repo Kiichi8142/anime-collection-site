@@ -2,9 +2,13 @@
 import ScrollableAnimeCard from '../components/ScrollableAnimeCard.vue';
 
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineAsyncComponent } from 'vue';
 import { useAnimeStore } from '@/stores/animeStore.js'
 import { storeToRefs } from 'pinia';
+
+const LoadingDot = defineAsyncComponent(
+  () => import('../components/LoadingDot.vue')
+)
 
 const router = useRouter()
 const animeStore = useAnimeStore()
@@ -60,7 +64,25 @@ const seasonTxt = animeStore.getCurrentSeason()
         <p class="font-semibold text-2xl mt-4">TV Series</p>
         <p class="text-neutral-400 text-base font-medium">Current season</p>
       </div>
-      <ScrollableAnimeCard :data="currentSeason" />
+      <Transition mode="out-in">
+        <ScrollableAnimeCard v-if="currentSeason" :data="currentSeason" />
+        <div v-else>
+          <LoadingDot></LoadingDot>
+        </div>
+      </Transition>
     </section>
   </div>
 </template>
+
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  @apply transition-all ease-in-out duration-300
+}
+
+.v-enter-from,
+.v-leave-to {
+  @apply opacity-0
+}
+</style>
