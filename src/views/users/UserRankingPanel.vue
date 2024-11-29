@@ -1,9 +1,11 @@
 <script setup>
 import { computed } from 'vue'
-const props = defineProps(['userStore'])
-const hasItems = computed(() => props?.userStore?.watchlist.length || 0)
+import { useUserStore } from "../../stores/userStore";
+
+const userStore = useUserStore()
+const hasItems = computed(() => userStore?.watchlist.length || 0)
 const sortedList = computed(() => {
-    const animeCpy = props?.userStore.watchlist
+    const animeCpy = userStore.watchlist
     if (animeCpy) {
         animeCpy.sort((a, b) => b.score - a.score);
     }

@@ -78,10 +78,7 @@ export const useUserStore = defineStore("user", () => {
 	}
 
 	function deleteWatchList(id) {
-		const anime = watchlist.value.some((item) => item.id === id);
-		if (anime) {
-			watchlist.value = watchlist.value.filter((item) => item.id !== id);
-		}
+		watchlist.value = watchlist.value.filter((item) => item.id !== id);
 	}
 
 	function resetUserData() {

@@ -1,48 +1,53 @@
 <script setup>
-import Bookmark from "../components/users/UserBookmarkPanel.vue";
-import Ranking from "../components/users/UserRankingPanel.vue";
-import { ref } from "vue";
 import { useUserStore } from "../stores/userStore";
+import Body7xl from "../components/Body7xl.vue";
 
 const userStore = useUserStore();
 
-const currentTab = ref("Bookmark");
-const tabs = {
-    Bookmark,
-    Ranking
-};
+const tabs = [
+    { name: 'Info', route: 'user' },
+    { name: 'Bookmark', route: 'user-bookmark' },
+    { name: 'Ranking', route: 'user-ranking' },
+    { name: 'Settings', route: 'user-settings' },
+]
+
 </script>
 
 <template>
-    <div class="max-w-7xl mx-auto p-4 lg:p-8">
-        <div class="flex space-x-4">
-            <img class="w-24 rounded-full object-contain" src="@/assets/img/placeholder_avatar.png" alt="" />
-            <div class="flex flex-col justify-center">
-                <h2 class="text-3xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
-                    {{ userStore.userInfo.displayName }}
-                </h2>
-                <p class="text-lg leading-8 text-neutral-400">
-                    Update or view your statistics here.
-                </p>
+    <Body7xl>
+        <div class="space-y-4">
+            <div class="flex space-x-4">
+                <img class="size-20 rounded-full object-contain" src="@/assets/img/placeholder_avatar.png" alt="" />
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
+                        {{ userStore.userInfo.displayName }}
+                    </h2>
+                    <p class="text-lg leading-8 text-neutral-400">
+                        Update or view your statistics here.
+                    </p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div>
+                    <router-link v-for="(tab, key) in tabs" :key="key" class="tab-button" :to="{ name: tab.route }">
+                        {{ tab.name }}
+                    </router-link>
+                </div>
+                <div>
+                    <router-view />
+                </div>
             </div>
         </div>
-
-        <div>
-            <button v-for="(_, tab) in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
-                @click="currentTab = tab">
-                {{ tab }}
-            </button>
-            <component :is="tabs[currentTab]" :user-store="userStore"></component>
-        </div>
-    </div>
+    </Body7xl>
 </template>
 
 <style>
 .tab-button {
-    @apply py-2 px-4 text-neutral-50 border-b-2 border-neutral-900 hover:text-green-500 transition-all;
+    @apply py-2 px-4 text-neutral-400 border-b-2 border-neutral-700 hover:text-green-500 transition-all;
 }
 
-.tab-button.active {
-    @apply border-green-500 border-b-2;
+.tab-button.router-link-exact-active {
+    @apply border-green-500 border-b-2 text-neutral-50
 }
 </style>

@@ -1,9 +1,6 @@
 <script setup>
+const props = defineProps(['userStats', 'userStore'])
 
-const props = defineProps(['userStats'])
-
-import { useUserStore } from '../stores/userStore';
-const userStore = useUserStore()
 </script>
 
 <template>

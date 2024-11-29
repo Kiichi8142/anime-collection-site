@@ -36,7 +36,7 @@ function setClose(type) {
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-4">
-                <RouterLink :to="{ name: 'profile' }" class="header-link">
+                <RouterLink :to="{ name: 'user' }" class="header-link">
                     Profile
                 </RouterLink>
             </div>
@@ -69,7 +69,7 @@ function setClose(type) {
                             <RouterLink @click="setClose(true)" to="/search"
                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Search</RouterLink>
-                            <RouterLink @click="setClose(true)" to="/profile"
+                            <RouterLink @click="setClose(true)" to="/user"
                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Profile</RouterLink>
                         </div>
