@@ -23,12 +23,12 @@ const onImageLoaded = () => {
 </script>
 
 <template>
-    <div class="rounded-md w-[14rem] text-center cursor-pointer">
+    <div class="rounded-md text-center cursor-pointer w-[14rem]">
         <div class="space-y-1">
-            <div>
-                <div v-if="!imageLoaded" class="bg-neutral-800 h-[21rem] w-full rounded-md animate-pulse"></div>
+            <div class="h-[20rem]">
+                <div v-if="!imageLoaded" class="bg-neutral-800 h-full rounded-md animate-pulse"></div>
                 <img @load="onImageLoaded" @click="gotoDetail()" :src="props.imgUrl"
-                    class="object-center object-cover hover:opacity-80 w-full rounded-md mx-auto transition-all duration-300">
+                    class="hover:opacity-80 w-full h-full object-cover mx-auto object-center rounded-md transition-all duration-300">
             </div>
             <div class="space-y-0.5">
                 <p class="text-neutral-50 truncate">{{ props.title }}</p>

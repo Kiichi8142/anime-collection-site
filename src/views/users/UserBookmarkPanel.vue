@@ -24,6 +24,7 @@ const currentBookmark = ref(null)
 const forms = ref({
     status: null,
     progress: 0,
+    score: 0,
 })
 
 const editBookmark = (id) => {
@@ -93,35 +94,9 @@ const updateBookmark = () => {
                 <p class="text-neutral-600 font-semibold text-lg">You have no bookmark.</p>
             </div>
         </div>
-        <Modal v-if="showModal" @close="hideModal" :title="currentBookmark.data.title">
+        <Modal v-if="showModal" @close="hideModal" title="Update Bookmark">
             <bookmarkForm v-model:form-status="forms.status" v-model:form-progress="forms.progress"
-                @hide-modal="hideModal" @update-bookmark="updateBookmark" />
+                v-model:form-score="forms.score" @hide-modal="hideModal" @update-bookmark="updateBookmark" />
         </Modal>
     </div>
 </template>
-
-<style>
-.button {
-    @apply px-2 py-1 rounded-md transition-all
-}
-
-.form-wrapper {
-    @apply gap-2 divide-neutral-400/50 divide-y
-}
-
-.form-button-wrapper {
-    @apply flex justify-between py-4
-}
-
-.input-group {
-    @apply space-x-4 grid grid-cols-3 py-4 items-center
-}
-
-.input-label {
-    @apply font-medium
-}
-
-.input {
-    @apply px-2 py-1 bg-neutral-600 rounded-md col-span-2 font-normal w-32
-}
-</style>

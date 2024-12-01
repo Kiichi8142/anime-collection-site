@@ -34,7 +34,7 @@ const seasonTxt = animeStore.getCurrentSeason()
 
 <template>
   <div class="max-w-7xl mx-auto p-6 lg:p-8 text-neutral-50">
-    <p class="font-semibold text-2xl">Collections</p>
+    <p class="font-semibold text-2xl">Category</p>
     <div class="grid md:grid-cols-2 gap-8 mt-4 max-w-7xl">
       <div @click="router.push({ name: 'seasonal', params: { year: year, season: seasonTxt } })"
         class="relative group hover:cursor-pointer h-28 md:h-100 row-span-1 md:row-span-2 transition-all duration-200 bg-black rounded-md">
