@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHistory(),
 	routes: [
 		{
 			path: "/",
@@ -20,9 +20,30 @@ const router = createRouter({
 			component: () => import("../views/CategoryAnimeView.vue"),
 		},
 		{
-			path: "/profile",
-			name: "profile",
+			path: "/user",
 			component: () => import("../views/UserView.vue"),
+			children: [
+				{
+					path: '',
+					name: 'user',
+					component: () => import("../views/users/UserInfoView.vue"),
+				},
+				{
+					name: 'user-bookmark',
+					path: 'bookmark',
+					component: () => import("../views/users/UserBookmarkPanel.vue"),
+				},
+				{
+					name: 'user-ranking',
+					path: 'ranking',
+					component: () => import("../views/users/UserRankingPanel.vue"),
+				},
+				{
+					name: 'user-settings',
+					path: 'settings',
+					component: () => import("../views/users/UserSettingsView.vue"),
+				},
+			]
 		},
 		{
 			path: "/anime/:id",

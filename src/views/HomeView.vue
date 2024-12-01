@@ -2,9 +2,14 @@
 import ScrollableAnimeCard from '../components/ScrollableAnimeCard.vue';
 
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineAsyncComponent } from 'vue';
 import { useAnimeStore } from '@/stores/animeStore.js'
 import { storeToRefs } from 'pinia';
+import Body7xl from '../components/Body7xl.vue';
+
+const LoadingDot = defineAsyncComponent(
+  () => import('../components/LoadingDot.vue')
+)
 
 const router = useRouter()
 const animeStore = useAnimeStore()
@@ -29,8 +34,8 @@ const seasonTxt = animeStore.getCurrentSeason()
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto p-6 lg:p-8 text-neutral-50">
-    <p class="font-semibold text-2xl">Collections</p>
+  <Body7xl>
+    <p class="font-semibold text-2xl text-neutral-200">Category</p>
     <div class="grid md:grid-cols-2 gap-8 mt-4 max-w-7xl">
       <div @click="router.push({ name: 'seasonal', params: { year: year, season: seasonTxt } })"
         class="relative group hover:cursor-pointer h-28 md:h-100 row-span-1 md:row-span-2 transition-all duration-200 bg-black rounded-md">
@@ -57,10 +62,28 @@ const seasonTxt = animeStore.getCurrentSeason()
 
     <section>
       <div class="space-x-0.5">
-        <p class="font-semibold text-2xl mt-4">TV Series</p>
+        <p class="font-semibold text-2xl mt-4 text-neutral-200">TV Series</p>
         <p class="text-neutral-400 text-base font-medium">Current season</p>
       </div>
-      <ScrollableAnimeCard :data="currentSeason" />
+      <Transition mode="out-in">
+        <ScrollableAnimeCard v-if="currentSeason" :data="currentSeason" />
+        <div v-else>
+          <LoadingDot></LoadingDot>
+        </div>
+      </Transition>
     </section>
-  </div>
+  </Body7xl>
 </template>
+
+<style>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  @apply transition-all ease-in-out duration-300
+}
+
+.v-enter-from,
+.v-leave-to {
+  @apply opacity-0
+}
+</style>

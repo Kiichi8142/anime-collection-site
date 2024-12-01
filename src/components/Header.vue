@@ -1,14 +1,11 @@
 <script setup>
-import { RouterLink, useRouter } from 'vue-router';
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const router = useRouter()
-const isClose = ref(true)
+const isClose = ref(true);
 
 function setClose(type) {
-    isClose.value = type
+    isClose.value = type;
 }
-
 </script>
 
 <template>
@@ -17,17 +14,13 @@ function setClose(type) {
             <div class="flex lg:flex-1 space-x-4">
                 <a href="#" class="-m-1.5 p-1.5">
                     <span class="sr-only">AAC</span>
-                    <img class="h-8 w-auto" src="@/assets/logo.webp" alt="">
+                    <img class="h-8 w-auto" src="@/assets/logo.webp" alt="" />
                 </a>
-                <RouterLink to="/"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">Home
-                </RouterLink>
-                <RouterLink :to="{ name: 'search' }"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                <RouterLink to="/" class="header-link">Home </RouterLink>
+                <RouterLink :to="{ name: 'search' }" class="header-link">
                     Search
                 </RouterLink>
-                <RouterLink :to="{ name: 'seasonal', params: {} }"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                <RouterLink :to="{ name: 'seasonal', params: {} }" class="header-link">
                     Seasonal
                 </RouterLink>
             </div>
@@ -43,8 +36,7 @@ function setClose(type) {
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-4">
-                <RouterLink :to="{ name: 'profile' }"
-                    class="text-sm font-semibold leading-6 text-gray-100 hover:bg-neutral-800 rounded-md px-4 py-2">
+                <RouterLink :to="{ name: 'user' }" class="header-link">
                     Profile
                 </RouterLink>
             </div>
@@ -58,7 +50,7 @@ function setClose(type) {
                 <div class="flex items-center justify-between">
                     <a href="#" class="-m-1.5 p-1.5">
                         <span class="sr-only">Your Company</span>
-                        <img class="h-8 w-auto" src="@/assets/logo.webp" alt="">
+                        <img class="h-8 w-auto" src="@/assets/logo.webp" alt="" />
                     </a>
                     <button @click="setClose(true)" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-300">
                         <span class="sr-only">Close menu</span>
@@ -77,7 +69,7 @@ function setClose(type) {
                             <RouterLink @click="setClose(true)" to="/search"
                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Search</RouterLink>
-                            <RouterLink @click="setClose(true)" to="/profile"
+                            <RouterLink @click="setClose(true)" to="/user"
                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-neutral-800">
                                 Profile</RouterLink>
                         </div>
@@ -87,3 +79,13 @@ function setClose(type) {
         </div>
     </header>
 </template>
+
+<style>
+.header-link {
+    @apply text-sm font-semibold leading-6 text-neutral-400 hover:text-neutral-200 rounded-md px-4 py-2 transition-all;
+}
+
+.router-link-active {
+    @apply text-neutral-50
+}
+</style>
