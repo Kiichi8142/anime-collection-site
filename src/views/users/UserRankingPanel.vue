@@ -31,8 +31,7 @@ const sortedList = computed(() => {
             </div>
         </div>
         <div v-else>
-            <p class="text-neutral-600 font-semibold text-lg">You don't have any bookmark. Search for anime and try
-                to bookmark something. :3</p>
+            <p class="text-neutral-600 font-semibold text-lg">You don't have any bookmark.</p>
         </div>
     </div>
 </template>

@@ -91,7 +91,7 @@ const updateBookmark = () => {
                 </div>
             </div>
             <div v-else>
-                <p class="text-neutral-600 font-semibold text-lg">You have no bookmark.</p>
+                <p class="text-neutral-600 font-semibold text-lg">You don't have any bookmark.</p>
             </div>
         </div>
         <Modal v-if="showModal" @close="hideModal" title="Update Bookmark">

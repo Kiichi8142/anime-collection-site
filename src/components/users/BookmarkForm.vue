@@ -22,7 +22,7 @@ const setScore = (score) => {
 
 <template>
     <div class="w-full px-8 py-4">
-        <form class="form-wrapper">
+        <form @submit.prevent class="form-wrapper">
             <div class="input-group">
                 <p class="input-label">Name</p>
                 <label for="name">Anime Name</label>

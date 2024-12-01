@@ -17,12 +17,13 @@ const tabs = [
     <Body7xl>
         <div class="space-y-4">
             <div class="flex space-x-4">
-                <img class="size-20 rounded-full object-contain" src="@/assets/img/placeholder_avatar.png" alt="" />
+                <img class="size-20 rounded-full object-contain my-auto" :src="userStore.userInfo.profilePicture || '@/assets/img/placeholder_avatar.png'" alt="User Avatar" />
                 <div class="flex flex-col justify-center">
                     <h2 class="text-xl font-bold tracking-tight text-neutral-100 sm:text-4xl">
                         {{ userStore.userInfo.displayName }}
                     </h2>
-                    <p class="text-lg leading-8 text-neutral-400">
+                    <p v-if="userStore.userInfo.pronouns" class="text-lg text-neutral-400">{{ userStore.userInfo.pronouns }}</p>
+                    <p v-else class="text-lg leading-8 text-neutral-400">
                         Update or view your statistics here.
                     </p>
                 </div>

@@ -3,6 +3,7 @@ import { defineAsyncComponent, onMounted, ref, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { animeSearch } from '../api/anime-api';
 import LoadingDot from '../components/LoadingDot.vue';
+import Body7xl from '../components/Body7xl.vue';
 
 const AnimeGridCard = defineAsyncComponent(
   () => import('../components/AnimeCardGrid.vue')
@@ -91,7 +92,7 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto p-4 lg:p-8">
+  <Body7xl>
     <div class="flex flex-col space-y-2">
       <h1 class="font-medium text-4xl text-gray-100">Search</h1>
       <input placeholder="Type in keywords..." v-model.lazy="searchQuery"
@@ -127,7 +128,7 @@ watchEffect(async () => {
           :current-page="pagesData.current_page" @next-page="nextPage" @prev-page="prevPage" />
       </div>
     </transition>
-  </div>
+  </Body7xl>
 </template>
 
 <style>

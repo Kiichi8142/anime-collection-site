@@ -5,10 +5,11 @@ import { useStorage } from "@vueuse/core";
 export const useUserStore = defineStore("user", () => {
 	const userInfo = ref(
 		useStorage("vueUseUser", {
-			displayName: "Anonymous",
-			interest: "",
+			displayName: "User",
+			interest: "Interest ?",
 			bio: "",
-			pronouns: "he/him",
+			pronouns: "",
+			profilePicture: "https://placehold.co/400x400.png", 
 		})
 	);
 
