@@ -11,6 +11,6 @@ const route = useRoute()
   <div class="flex flex-col min-h-screen">
     <Header />
     <RouterView :key="route.fullPath" />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>

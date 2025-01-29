@@ -17,11 +17,12 @@ const { fetchSeason, fetchRecommendation } = animeStore
 const { season, recommendations } = storeToRefs(animeStore)
 
 const currentSeason = ref()
+const currentYear = ref(new Date().getFullYear())
 
 onMounted(async () => {
   await fetchSeason()
   await fetchRecommendation()
-  currentSeason.value = season.value.current.filter((anime) => anime.year == 2024) // show for current year
+  currentSeason.value = season.value.current.filter((anime) => anime.year == currentYear.value) // show for current year
 })
 
 function goToCategory(type) {
@@ -59,7 +60,7 @@ const seasonTxt = animeStore.getCurrentSeason()
           class="rounded-md object-cover object-top w-full h-full shadow-inner opacity-80 group-hover:opacity-50 transition-all duration-200">
       </div>
     </div>
-
+    {{ new Date().getFullYear() }}
     <section>
       <div class="space-x-0.5">
         <p class="font-semibold text-2xl mt-4 text-neutral-200">TV Series</p>
